@@ -2,27 +2,121 @@
   {
     "id": "kaspa_001",
     "question": "What consensus structure does Kaspa use?",
-    "choices": ["Proof of Stake", "BlockDAG", "Single-chain Proof of Work", "Layer 2 Rollups"],
+    "choices": [
+      "Proof of Stake",
+      "BlockDAG",
+      "Single-chain Proof of Work",
+      "Layer 2 Rollups"
+    ],
     "answer": 1,
-    "explain": "Kaspa uses a BlockDAG."
+    "explain": "Kaspa uses a BlockDAG, allowing blocks to be processed in parallel."
   },
   {
     "id": "kaspa_002",
-    "question": "Kaspa is secured using which mechanism?",
-    "choices": ["Proof of Stake", "Proof of Work", "Delegated Proof of Stake", "Proof of Authority"],
+    "question": "Kaspa is secured using which consensus mechanism?",
+    "choices": [
+      "Proof of Stake",
+      "Proof of Work",
+      "Delegated Proof of Stake",
+      "Proof of Authority"
+    ],
     "answer": 1,
-    "explain": "Kaspa uses Proof of Work."
+    "explain": "Kaspa uses Proof of Work for security."
   },
   {
     "id": "kaspa_003",
-    "question": "What is a primary goal of Kaspa?",
+    "question": "What is one of Kaspa’s main design goals?",
     "choices": [
       "High throughput without sacrificing decentralization",
       "Privacy-first transactions",
-      "Smart contracts",
-      "NFT marketplaces"
+      "Smart contract execution",
+      "Centralized validation"
     ],
     "answer": 0,
-    "explain": "Kaspa focuses on speed, security, and decentralization."
+    "explain": "Kaspa focuses on speed and scalability while remaining decentralized."
+  },
+  {
+    "id": "kaspa_004",
+    "question": "What allows Kaspa to achieve faster block processing?",
+    "choices": [
+      "Sharding",
+      "BlockDAG parallel blocks",
+      "Centralized miners",
+      "Layer 2 channels"
+    ],
+    "answer": 1,
+    "explain": "Kaspa’s BlockDAG allows many blocks to be confirmed simultaneously."
+  },
+  {
+    "id": "kaspa_005",
+    "question": "Which hashing algorithm does Kaspa use?",
+    "choices": [
+      "SHA-256",
+      "Ethash",
+      "kHeavyHash",
+      "Scrypt"
+    ],
+    "answer": 2,
+    "explain": "Kaspa uses the kHeavyHash Proof-of-Work algorithm."
+  },
+  {
+    "id": "kaspa_006",
+    "question": "Kaspa aims to scale without compromising which core blockchain property?",
+    "choices": [
+      "Centralization",
+      "Decentralization",
+      "Permissioned access",
+      "Validator slashing"
+    ],
+    "answer": 1,
+    "explain": "Maintaining decentralization is a core goal of Kaspa."
+  },
+  {
+    "id": "kaspa_007",
+    "question": "What problem does Kaspa’s BlockDAG design primarily solve?",
+    "choices": [
+      "Slow transaction finality",
+      "Mining centralization",
+      "Smart contract execution",
+      "High gas fees"
+    ],
+    "answer": 0,
+    "explain": "BlockDAG allows high throughput and faster confirmations."
+  },
+  {
+    "id": "kaspa_008",
+    "question": "Kaspa belongs to which category of blockchain networks?",
+    "choices": [
+      "Proof-of-Stake Layer 1",
+      "Proof-of-Work Layer 1",
+      "Layer 2 scaling network",
+      "Sidechain"
+    ],
+    "answer": 1,
+    "explain": "Kaspa is a Proof-of-Work Layer 1 blockchain."
+  },
+  {
+    "id": "kaspa_009",
+    "question": "What makes Kaspa different from traditional linear blockchains?",
+    "choices": [
+      "It uses smart contracts",
+      "It processes blocks sequentially",
+      "It allows multiple blocks at the same time",
+      "It is permissioned"
+    ],
+    "answer": 2,
+    "explain": "Kaspa allows multiple blocks to coexist via its BlockDAG structure."
+  },
+  {
+    "id": "kaspa_010",
+    "question": "What is a key benefit of Kaspa’s fast block times?",
+    "choices": [
+      "Lower decentralization",
+      "Faster transaction confirmations",
+      "Higher validator requirements",
+      "Reduced network security"
+    ],
+    "answer": 1,
+    "explain": "Fast block times improve confirmation speed without sacrificing security."
   }
 ]

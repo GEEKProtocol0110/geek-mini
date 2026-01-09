@@ -4,19 +4,42 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import questions from "../../data/questions/kaspa.daily.json";
 
+type Answer = {
+  text: string;
+  isCorrect: boolean;
+};
+
+function shuffleAnswers(question: any): Answer[] {
+  const entries = question.choices.map((text: string, index: number) => ({
+    text,
+    isCorrect: index === question.answer
+  }));
+
+  return [...entries].sort(() => Math.random() - 0.5);
+}
+
 export default function DailyPage() {
   const router = useRouter();
 
   const [quizQuestions, setQuizQuestions] = useState<typeof questions>([]);
+  const [answers, setAnswers] = useState<Answer[]>([]);
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState(false);
 
-  // ✅ Shuffle ONLY on the client, after mount
+  // Shuffle questions ONCE (client only)
   useEffect(() => {
     const shuffled = [...questions].sort(() => Math.random() - 0.5);
     setQuizQuestions(shuffled.slice(0, 5));
   }, []);
+
+  // Shuffle answers when question changes
+  useEffect(() => {
+    if (quizQuestions[index]) {
+      setAnswers(shuffleAnswers(quizQuestions[index]));
+      setAnswered(false);
+    }
+  }, [index, quizQuestions]);
 
   const q = quizQuestions[index];
 
@@ -24,10 +47,10 @@ export default function DailyPage() {
     return <main style={{ padding: 24 }}>Loading…</main>;
   }
 
-  function handleAnswer(choiceIndex: number) {
+  function handleAnswer(isCorrect: boolean) {
     if (answered) return;
 
-    if (choiceIndex === q.answer) {
+    if (isCorrect) {
       setScore((s) => s + 1);
     }
 
@@ -37,9 +60,8 @@ export default function DailyPage() {
   function nextQuestion() {
     if (index + 1 < quizQuestions.length) {
       setIndex((i) => i + 1);
-      setAnswered(false);
     } else {
-      router.push(`/result?score=${score}`);
+      router.push(`/result?score=${score}&mode=daily`);
     }
   }
 
@@ -54,9 +76,11 @@ export default function DailyPage() {
       <p>{q.question}</p>
 
       <ul>
-        {q.choices.map((c, i) => (
+        {answers.map((a, i) => (
           <li key={i}>
-            <button onClick={() => handleAnswer(i)}>{c}</button>
+            <button onClick={() => handleAnswer(a.isCorrect)}>
+              {a.text}
+            </button>
           </li>
         ))}
       </ul>
