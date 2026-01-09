@@ -1,0 +1,28 @@
+[
+  {
+    "id": "kaspa_001",
+    "question": "What consensus structure does Kaspa use?",
+    "choices": ["Proof of Stake", "BlockDAG", "Single-chain Proof of Work", "Layer 2 Rollups"],
+    "answer": 1,
+    "explain": "Kaspa uses a BlockDAG."
+  },
+  {
+    "id": "kaspa_002",
+    "question": "Kaspa is secured using which mechanism?",
+    "choices": ["Proof of Stake", "Proof of Work", "Delegated Proof of Stake", "Proof of Authority"],
+    "answer": 1,
+    "explain": "Kaspa uses Proof of Work."
+  },
+  {
+    "id": "kaspa_003",
+    "question": "What is a primary goal of Kaspa?",
+    "choices": [
+      "High throughput without sacrificing decentralization",
+      "Privacy-first transactions",
+      "Smart contracts",
+      "NFT marketplaces"
+    ],
+    "answer": 0,
+    "explain": "Kaspa focuses on speed, security, and decentralization."
+  }
+]
