@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import questions from "../../data/questions/kaspa.daily.json";
+import { playCorrectSound, playWrongSound, playClickSound } from "../../utils/sounds";
 
 type Answer = {
   text: string;
@@ -31,6 +32,8 @@ export default function SpeedPage() {
   const [answered, setAnswered] = useState(false);
   const [selectedCorrect, setSelectedCorrect] = useState<boolean | null>(null);
   const [timeLeft, setTimeLeft] = useState(30);
+  const [streak, setStreak] = useState(0);
+  const [maxStreak, setMaxStreak] = useState(0);
 
   /* ---------------- COOLDOWN CHECK ---------------- */
   useEffect(() => {
@@ -93,6 +96,34 @@ export default function SpeedPage() {
     return () => clearTimeout(t);
   }, [timeLeft, score, answeredCount, router, cooldownLeft]);
 
+  /* ---------------- KEYBOARD SHORTCUTS ---------------- */
+  useEffect(() => {
+    if (cooldownLeft !== null || !q) return;
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (answered) return;
+      
+      const key = parseInt(e.key);
+      if (key >= 1 && key <= answers.length) {
+        handleAnswer(answers[key - 1].isCorrect);
+      }{
+      setScore((s) => s + 1);
+      setStreak((s) => {
+        const newStreak = s + 1;
+        setMaxStreak((max) => Math.max(max, newStreak));
+        return newStreak;
+      });
+      playCorrectSound();
+    } else {
+      setStreak(0);
+      playWrongSound();
+    }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [answered, answers, q, cooldownLeft]);
+
   /* ---------------- GAME LOGIC ---------------- */
   const q = quizQuestions[index];
 
@@ -123,7 +154,10 @@ export default function SpeedPage() {
         <div className="max-w-md w-full text-center space-y-6 animate-[fadeIn_0.5s_ease-out]">
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/20">
             <div className="text-6xl mb-4">⏳</div>
-            <h1 className="text-3xl font-bold text-white mb-4">
+            <h1 className="{
+              playClickSound();
+              router.push("/");
+            }ld text-white mb-4">
               Speed Mode Cooldown
             </h1>
             <p className="text-gray-300 mb-6">
@@ -197,6 +231,11 @@ export default function SpeedPage() {
               <div className="text-gray-400">
                 Answered: <span className="text-white font-semibold">{answeredCount}</span>
               </div>
+              {streak > 1 && (
+                <div className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full border border-orange-500/30 animate-pulse">
+                  🔥 {streak}
+                </div>
+              )}
               <div className="text-gray-400">
                 Score: <span className="text-white font-semibold">{score}</span>
               </div>
@@ -234,7 +273,7 @@ export default function SpeedPage() {
             }
 
             return (
-              <button
+              <buttoni + 1
                 key={i}
                 onClick={() => handleAnswer(a.isCorrect)}
                 disabled={answered}

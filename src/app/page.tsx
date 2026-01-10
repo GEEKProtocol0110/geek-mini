@@ -1,9 +1,17 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getStats } from "../utils/storage";
+import { playClickSound } from "../utils/sounds";
 
 export default function HomePage() {
   const router = useRouter();
+  const [stats, setStats] = useState<any>(null);
+
+  useEffect(() => {
+    setStats(getStats());
+  }, []);
 
   return (
     <main className="min-h-screen flex items-center justify-center p-6">
@@ -25,7 +33,10 @@ export default function HomePage() {
         <div className="grid md:grid-cols-2 gap-6 mt-12">
           {/* Daily Mode */}
           <div
-            onClick={() => router.push("/daily")}
+            onClick={() => {
+              playClickSound();
+              router.push("/daily");
+            }}
             className="group relative bg-gradient-to-br from-indigo-600 to-purple-600 p-8 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/50"
             style={{ animation: "slideInUp 0.6s ease-out 0.2s both" }}
           >
@@ -57,7 +68,10 @@ export default function HomePage() {
 
           {/* Speed Mode */}
           <div
-            onClick={() => router.push("/speed")}
+            onClick={() => {
+              playClickSound();
+              router.push("/speed");
+            }}
             className="group relative bg-gradient-to-br from-pink-600 to-red-600 p-8 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-pink-500/50"
             style={{ animation: "slideInUp 0.6s ease-out 0.4s both" }}
           >
@@ -86,14 +100,43 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </div>
+        {stats && stats.totalGames > 0 && (
+          <div
+            className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
+            style={{ animation: "slideInUp 0.6s ease-out 0.6s both" }}
+          >
+            <div className="p-4 bg-white/5 backdrop-blur rounded-xl border border-white/10 text-center">
+              <div className="text-2xl font-bold text-white">{stats.totalGames}</div>
+              <div className="text-xs text-gray-400 mt-1">Games Played</div>
+            </div>
+            <div className="p-4 bg-white/5 backdrop-blur rounded-xl border border-white/10 text-center">
+              <div className="text-2xl font-bold text-white">{stats.avgAccuracy}%</div>
+              <div className="text-xs text-gray-400 mt-1">Avg Accuracy</div>
+            </div>
+            <div className="p-4 bg-white/5 backdrop-blur rounded-xl border border-white/10 text-center">
+              <div className="text-2xl font-bold text-indigo-400">
+                {stats.bestDaily?.accuracy || 0}%
+              </div>
+              <div className="text-xs text-gray-400 mt-1">Best Daily</div>
+            </div>
+            <div className="p-4 bg-white/5 backdrop-blur rounded-xl border border-white/10 text-center">
+              <div className="text-2xl font-bold text-pink-400">
+                {stats.bestSpeed?.score || 0}
+              </div>
+              <div className="text-xs text-gray-400 mt-1">Best Speed</div>
+            </div>
+          </div>
+        )}
 
-        {/* Stats */}
         <div
-          className="mt-12 p-6 bg-white/5 backdrop-blur rounded-xl border border-white/10"
-          style={{ animation: "slideInUp 0.6s ease-out 0.6s both" }}
+          className="mt-6 p-6 bg-white/5 backdrop-blur rounded-xl border border-white/10"
+          style={{ animation: "slideInUp 0.6s ease-out 0.7s both" }}
         >
           <p className="text-sm text-gray-400 mb-2">Powered by</p>
+          <p className="text-lg font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+            Geek Protocol
+          </p>
+          <p className="text-xs text-gray-500 mt-2">💡 Tip: Use keys 1-4 to answer questions!<p className="text-sm text-gray-400 mb-2">Powered by</p>
           <p className="text-lg font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
             Geek Protocol
           </p>

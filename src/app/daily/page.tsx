@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import questions from "../../data/questions/kaspa.daily.json";
+import { playCorrectSound, playWrongSound, playClickSound } from "../../utils/sounds";
 
 type Answer = {
   text: string;
@@ -27,6 +28,7 @@ export default function DailyPage() {
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [streak, setStreak] = useState(0);
 
   // Shuffle questions ONCE (client only)
   useEffect(() => {
@@ -43,6 +45,25 @@ export default function DailyPage() {
     }
   }, [index, quizQuestions]);
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (answered) {
+        if (e.key === "Enter") {
+          nextQuestion();
+        }
+      } else {
+        const key = parseInt(e.key);
+        if (key >= 1 && key <= answers.length) {
+          handleAnswer(answers[key - 1].isCorrect, key - 1);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [answered, answers]);
+
   const q = quizQuestions[index];
 
   if (!q) {
@@ -58,6 +79,11 @@ export default function DailyPage() {
 
     if (isCorrect) {
       setScore((s) => s + 1);
+      setStreak((s) => s + 1);
+      playCorrectSound();
+    } else {
+      setStreak(0);
+      playWrongSound();
     }
 
     setSelectedAnswer(answerIndex);
@@ -65,6 +91,7 @@ export default function DailyPage() {
   }
 
   function nextQuestion() {
+    playClickSound();
     if (index + 1 < quizQuestions.length) {
       setIndex((i) => i + 1);
     } else {
@@ -90,6 +117,11 @@ export default function DailyPage() {
           </button>
 
           <div className="flex items-center justify-between mb-4">
+              {streak > 1 && (
+                <div className="text-xs mt-1 px-2 py-1 bg-orange-500/20 text-orange-400 rounded-full border border-orange-500/30 animate-pulse">
+                  🔥 {streak} Streak
+                </div>
+              )}
             <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
               Daily Challenge
             </h1>
@@ -145,7 +177,7 @@ export default function DailyPage() {
                 key={i}
                 onClick={() => handleAnswer(a.isCorrect, i)}
                 disabled={answered}
-                className={buttonClass}
+                classi + 1
                 style={{ animation: `slideInUp 0.5s ease-out ${0.1 * i}s both` }}
               >
                 <div className="flex items-center gap-4">
@@ -176,7 +208,7 @@ export default function DailyPage() {
               onClick={nextQuestion}
               className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/50"
             >
-              {index + 1 < quizQuestions.length ? "Next Question →" : "See Results 🎉"}
+              {index + 1 < quizQuestions.length ? "Next Question → (Press Enter)" : "See Results 🎉"}
             </button>
           </div>
         )}

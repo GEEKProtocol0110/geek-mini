@@ -2,11 +2,15 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import Confetti from "../../components/Confetti";
+import { saveScore } from "../../utils/storage";
+import { playClickSound } from "../../utils/sounds";
 
 function ResultContent() {
   const router = useRouter();
   const params = useSearchParams();
   const [mounted, setMounted] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const score = Number(params.get("score") ?? 0);
   const answered = Number(params.get("answered") ?? score);
@@ -20,10 +24,26 @@ function ResultContent() {
     if (mode === "speed") {
       localStorage.setItem("speed_last_play", Date.now().toString());
     }
+    
+    // Save score to history
+    saveScore({
+      mode: mode as "daily" | "speed",
+      score,
+      total: answered,
+      accuracy,
+      timestamp: Date.now(),
+    });
+
     setMounted(true);
-  }, [mode]);
+
+    // Show confetti for great scores
+    if (accuracy >= 80) {
+      setTimeout(() => setShowConfetti(true), 500);
+    }
+  }, [mode, score, answered, accuracy]);
 
   function handlePlayAgain() {
+    playClickSound();
     if (mode === "speed") {
       const last = localStorage.getItem("speed_last_play");
       if (last && Date.now() - Number(last) < 30000) {
@@ -32,6 +52,22 @@ function ResultContent() {
       }
     }
     router.push(`/${mode}`);
+  }
+
+  function shareScore() {
+    playClickSound();
+    const text = `🎮 I scored ${score}/${answered} (${accuracy}%) on Geek Mini ${mode === "daily" ? "Daily Challenge" : "Speed Round"}! Can you beat my score?`;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: "Geek Mini Score",
+        text,
+        url: window.location.origin,
+      }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(text + " " + window.location.origin);
+      alert("Score copied to clipboard!");
+    }
   }
 
   const getPerformanceMessage = () => {
@@ -54,6 +90,7 @@ function ResultContent() {
 
   return (
     <main className="min-h-screen p-6 flex items-center justify-center">
+      <Confetti active={showConfetti} />
       <div className="max-w-2xl w-full text-center space-y-8">
         {/* Header */}
         <div className="animate-[fadeIn_0.6s_ease-out]">
@@ -133,8 +170,10 @@ function ResultContent() {
             🔄 Play Again
           </button>
 
-          <button
-            onClick={() => router.push("/")}
+          <button{
+              playClickSound();
+              router.push("/");
+            }}
             className="bg-white/10 hover:bg-white/20 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 border border-white/20"
           >
             🏠 Back to Home
@@ -143,9 +182,16 @@ function ResultContent() {
 
         {/* Share Section */}
         <div
-          className="text-gray-400 text-sm"
+          className="space-y-3"
           style={{ animation: "fadeIn 0.6s ease-out 1.1s both" }}
         >
+          <button
+            onClick={shareScore}
+            className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 hover:scale-105"
+          >
+            📤 Share Your Score
+          </button>
+          <p className="text-gray-400 text-sm">Challenge your
           <p>Share your score with friends! 🎉</p>
         </div>
       </div>
