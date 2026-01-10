@@ -100,6 +100,9 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Stats */}
         {stats && stats.totalGames > 0 && (
           <div
             className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
