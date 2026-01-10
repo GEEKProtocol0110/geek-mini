@@ -176,6 +176,8 @@ export default function DailyPage() {
 
             return (
               <button
+                key={i}
+                onClick={() => handleAnswer(a.isCorrect, i)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
