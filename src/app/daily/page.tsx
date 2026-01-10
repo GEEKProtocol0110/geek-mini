@@ -185,9 +185,7 @@ export default function DailyPage() {
                 disabled={answered}
                 className={buttonClass}
                 style={{ animation: `slideInUp 0.5s ease-out ${0.1 * i}s both` }}
-                aria-label={`Answer ${i + 1}: ${a.text}`
-                className={buttonClass}
-                style={{ animation: `slideInUp 0.5s ease-out ${0.1 * i}s both` }}
+                aria-label={`Answer ${i + 1}: ${a.text}`}
               >
                 <div className="flex items-center gap-4">
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold">
