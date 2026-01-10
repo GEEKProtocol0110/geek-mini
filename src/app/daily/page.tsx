@@ -145,8 +145,10 @@ export default function DailyPage() {
 
         {/* Question Card */}
         <div
-          className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/20 mb-6"
+          className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/20 mb-6 shadow-xl"
           style={{ animation: "slideInUp 0.5s ease-out" }}
+          role="heading"
+          aria-level={2}
         >
           <p className="text-2xl font-semibold text-white leading-relaxed">
             {q.question}
@@ -174,9 +176,16 @@ export default function DailyPage() {
 
             return (
               <button
-                key={i}
-                onClick={() => handleAnswer(a.isCorrect, i)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleAnswer(a.isCorrect, i);
+                  }
+                }}
                 disabled={answered}
+                className={buttonClass}
+                style={{ animation: `slideInUp 0.5s ease-out ${0.1 * i}s both` }}
+                aria-label={`Answer ${i + 1}: ${a.text}`
                 className={buttonClass}
                 style={{ animation: `slideInUp 0.5s ease-out ${0.1 * i}s both` }}
               >
@@ -199,7 +208,8 @@ export default function DailyPage() {
               </button>
             );
           })}
-        </div>
+        </div> active:scale-95"
+              aria-label={index + 1 < quizQuestions.length ? "Go to next question" : "View results"}
 
         {/* Next Button */}
         {answered && (

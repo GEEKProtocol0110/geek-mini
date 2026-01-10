@@ -37,7 +37,16 @@ export default function HomePage() {
               playClickSound();
               router.push("/daily");
             }}
-            className="group relative bg-gradient-to-br from-indigo-600 to-purple-600 p-8 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/50"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                playClickSound();
+                router.push("/daily");
+              }
+            }}
+            tabIndex={0}
+            role="button"
+            aria-label="Start Daily Challenge"
+            className="group relative bg-gradient-to-br from-indigo-600 to-purple-600 p-8 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/50 focus:scale-105 focus:shadow-2xl focus:shadow-indigo-500/50"
             style={{ animation: "slideInUp 0.6s ease-out 0.2s both" }}
           >
             <div className="absolute inset-0 bg-white/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -72,7 +81,16 @@ export default function HomePage() {
               playClickSound();
               router.push("/speed");
             }}
-            className="group relative bg-gradient-to-br from-pink-600 to-red-600 p-8 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-pink-500/50"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                playClickSound();
+                router.push("/speed");
+              }
+            }}
+            tabIndex={0}
+            role="button"
+            aria-label="Start Speed Round"
+            className="group relative bg-gradient-to-br from-pink-600 to-red-600 p-8 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-pink-500/50 focus:scale-105 focus:shadow-2xl focus:shadow-pink-500/50"
             style={{ animation: "slideInUp 0.6s ease-out 0.4s both" }}
           >
             <div className="absolute inset-0 bg-white/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -139,7 +157,9 @@ export default function HomePage() {
           <p className="text-lg font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
             Geek Protocol
           </p>
-          <p className="text-xs text-gray-500 mt-2">💡 Tip: Use keys 1-4 to answer questions!</p>
+          <p className="text-xs text-gray-500 mt-2">
+            💡 Tip: Use keys 1-4 to answer questions quickly!
+          </p>
         </div>
       </div>
     </main>
