@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function EmbedPage() {
+function EmbedContent() {
   const router = useRouter();
   const params = useSearchParams();
 
@@ -20,8 +20,20 @@ export default function EmbedPage() {
   }, [params, router]);
 
   return (
-    <main style={{ padding: 24 }}>
-      <p>Launching Geek Mini…</p>
+    <main className="min-h-screen flex items-center justify-center">
+      <div className="text-2xl text-gray-300 animate-pulse">Launching Geek Mini…</div>
     </main>
+  );
+}
+
+export default function EmbedPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="text-2xl text-gray-300 animate-pulse">Loading…</div>
+      </main>
+    }>
+      <EmbedContent />
+    </Suspense>
   );
 }
