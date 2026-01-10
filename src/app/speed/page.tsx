@@ -33,7 +33,6 @@ export default function SpeedPage() {
   const [selectedCorrect, setSelectedCorrect] = useState<boolean | null>(null);
   const [timeLeft, setTimeLeft] = useState(30);
   const [streak, setStreak] = useState(0);
-  const [maxStreak, setMaxStreak] = useState(0);
 
   /* ---------------- COOLDOWN CHECK ---------------- */
   useEffect(() => {
@@ -96,33 +95,6 @@ export default function SpeedPage() {
     return () => clearTimeout(t);
   }, [timeLeft, score, answeredCount, router, cooldownLeft]);
 
-  /* ---------------- KEYBOARD SHORTCUTS ---------------- */
-  useEffect(() => {
-    if (cooldownLeft !== null || !q) return;
-
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (answered) return;
-      
-      const key = parseInt(e.key);
-      if (key >= 1 && key <= answers.length) {
-        handleAnswer(answers[key - 1].isCorrect);
-      }{
-      setScore((s) => s + 1);
-      setStreak((s) => {
-        const newStreak = s + 1;
-        setMaxStreak((max) => Math.max(max, newStreak));
-        return newStreak;
-      });
-      playCorrectSound();
-    } else {
-      setStreak(0);
-      playWrongSound();
-    }
-
-    setTimeout(() => {
-    return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [answered, answers, q, cooldownLeft]);
-
   /* ---------------- GAME LOGIC ---------------- */
   const q = quizQuestions[index];
 
@@ -133,7 +105,14 @@ export default function SpeedPage() {
     setAnsweredCount((c) => c + 1);
     setSelectedCorrect(isCorrect);
 
-    if (isCorrect) setScore((s) => s + 1);
+    if (isCorrect) {
+      setScore((s) => s + 1);
+      setStreak((s) => s + 1);
+      playCorrectSound();
+    } else {
+      setStreak(0);
+      playWrongSound();
+    }
 
     setTimeout(() => {
       if (index + 1 < quizQuestions.length) {
@@ -153,10 +132,7 @@ export default function SpeedPage() {
         <div className="max-w-md w-full text-center space-y-6 animate-[fadeIn_0.5s_ease-out]">
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/20">
             <div className="text-6xl mb-4">⏳</div>
-            <h1 className="{
-              playClickSound();
-              router.push("/");
-            }ld text-white mb-4">
+            <h1 className="text-3xl font-bold text-white mb-4">
               Speed Mode Cooldown
             </h1>
             <p className="text-gray-300 mb-6">
@@ -167,7 +143,10 @@ export default function SpeedPage() {
             </div>
           </div>
           <button
-            onClick={() => router.push("/")}
+            onClick={() => {
+              playClickSound();
+              router.push("/");
+            }}
             className="w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 border border-white/20"
           >
             ← Back to Home
@@ -226,15 +205,15 @@ export default function SpeedPage() {
             <div className="text-gray-400">
               Question {index + 1} / {quizQuestions.length}
             </div>
-            <div className="flex items-center gap-4">
-              <div className="text-gray-400">
-                Answered: <span className="text-white font-semibold">{answeredCount}</span>
-              </div>
               {streak > 1 && (
                 <div className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full border border-orange-500/30 animate-pulse">
                   🔥 {streak}
                 </div>
               )}
+            <div className="flex items-center gap-4">
+              <div className="text-gray-400">
+                Answered: <span className="text-white font-semibold">{answeredCount}</span>
+              </div>
               <div className="text-gray-400">
                 Score: <span className="text-white font-semibold">{score}</span>
               </div>
@@ -272,7 +251,7 @@ export default function SpeedPage() {
             }
 
             return (
-              <buttoni + 1
+              <button
                 key={i}
                 onClick={() => handleAnswer(a.isCorrect)}
                 disabled={answered}

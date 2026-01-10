@@ -192,8 +192,7 @@ function ResultContent() {
           >
             📤 Share Your Score
           </button>
-          <p className="text-gray-400 text-sm">Challenge your
-          <p>Share your score with friends! 🎉</p>
+          <p className="text-gray-400 text-sm">Challenge your friends! 🎉</p>
         </div>
       </div>
     </main>
