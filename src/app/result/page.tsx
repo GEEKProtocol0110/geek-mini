@@ -170,7 +170,8 @@ function ResultContent() {
             🔄 Play Again
           </button>
 
-          <button{
+          <button
+            onClick={() => {
               playClickSound();
               router.push("/");
             }}

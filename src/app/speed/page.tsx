@@ -118,9 +118,8 @@ export default function SpeedPage() {
       setStreak(0);
       playWrongSound();
     }
-    };
 
-    window.addEventListener("keydown", handleKeyPress);
+    setTimeout(() => {
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, [answered, answers, q, cooldownLeft]);
 

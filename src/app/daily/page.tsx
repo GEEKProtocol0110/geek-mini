@@ -177,12 +177,12 @@ export default function DailyPage() {
                 key={i}
                 onClick={() => handleAnswer(a.isCorrect, i)}
                 disabled={answered}
-                classi + 1
+                className={buttonClass}
                 style={{ animation: `slideInUp 0.5s ease-out ${0.1 * i}s both` }}
               >
                 <div className="flex items-center gap-4">
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold">
-                    {String.fromCharCode(65 + i)}
+                    {i + 1}
                   </div>
                   <div className="flex-grow text-lg">{a.text}</div>
                   {showCorrect && (

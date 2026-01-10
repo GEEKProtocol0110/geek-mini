@@ -136,10 +136,7 @@ export default function HomePage() {
           <p className="text-lg font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
             Geek Protocol
           </p>
-          <p className="text-xs text-gray-500 mt-2">💡 Tip: Use keys 1-4 to answer questions!<p className="text-sm text-gray-400 mb-2">Powered by</p>
-          <p className="text-lg font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-            Geek Protocol
-          </p>
+          <p className="text-xs text-gray-500 mt-2">💡 Tip: Use keys 1-4 to answer questions!</p>
         </div>
       </div>
     </main>
