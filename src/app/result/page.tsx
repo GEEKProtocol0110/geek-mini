@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
-export default function ResultPage() {
+function ResultContent() {
   const router = useRouter();
   const params = useSearchParams();
   const [mounted, setMounted] = useState(false);
@@ -150,6 +150,18 @@ export default function ResultPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function ResultPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="text-2xl text-gray-300 animate-pulse">Loading results…</div>
+      </main>
+    }>
+      <ResultContent />
+    </Suspense>
   );
 }
 
