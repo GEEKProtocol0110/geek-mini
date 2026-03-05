@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -13,16 +13,40 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Geek Mini - Test Your Knowledge",
-  description: "Quick knowledge games powered by Geek Protocol. Challenge yourself with daily quizzes and speed rounds!",
+  metadataBase: new URL("https://geek-mini.vercel.app"),
+  title: {
+    default: "Geek Mini",
+    template: "%s | Geek Mini",
+  },
+  description:
+    "Fast, interactive knowledge quizzes powered by Geek Protocol. Play Daily Challenge and Speed Round.",
+  applicationName: "Geek Mini",
   keywords: ["quiz", "trivia", "knowledge", "games", "kaspa", "blockchain", "learning"],
   authors: [{ name: "Geek Protocol" }],
-  openGraph: {
-    title: "Geek Mini - Test Your Knowledge",
-    description: "Quick knowledge games powered by Geek Protocol. Challenge yourself with daily quizzes and speed rounds!",
-    type: "website",
+  category: "education",
+  alternates: {
+    canonical: "/",
   },
-  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
+  openGraph: {
+    title: "Geek Mini",
+    description:
+      "Fast, interactive knowledge quizzes powered by Geek Protocol. Play Daily Challenge and Speed Round.",
+    type: "website",
+    siteName: "Geek Mini",
+    url: "https://geek-mini.vercel.app",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Geek Mini",
+    description:
+      "Fast, interactive knowledge quizzes powered by Geek Protocol. Play Daily Challenge and Speed Round.",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
   themeColor: "#6366f1",
 };
 

@@ -10,6 +10,7 @@ interface Particle {
   rotation: number;
   color: string;
   size: number;
+  isCircle: boolean;
 }
 
 export default function Confetti({ active }: { active: boolean }) {
@@ -30,10 +31,13 @@ export default function Confetti({ active }: { active: boolean }) {
         rotation: Math.random() * 360,
         color: colors[Math.floor(Math.random() * colors.length)],
         size: Math.random() * 10 + 5,
+        isCircle: Math.random() > 0.5,
       });
     }
 
-    setParticles(newParticles);
+    const frameId = requestAnimationFrame(() => {
+      setParticles(newParticles);
+    });
 
     const interval = setInterval(() => {
       setParticles((prev) =>
@@ -55,6 +59,7 @@ export default function Confetti({ active }: { active: boolean }) {
     }, 4000);
 
     return () => {
+      cancelAnimationFrame(frameId);
       clearInterval(interval);
       clearTimeout(timeout);
     };
@@ -75,7 +80,7 @@ export default function Confetti({ active }: { active: boolean }) {
             height: particle.size,
             backgroundColor: particle.color,
             transform: `rotate(${particle.rotation}deg)`,
-            borderRadius: Math.random() > 0.5 ? "50%" : "0",
+            borderRadius: particle.isCircle ? "50%" : "0",
           }}
         />
       ))}

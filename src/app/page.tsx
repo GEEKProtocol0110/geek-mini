@@ -1,17 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getStats } from "../utils/storage";
 import { playClickSound } from "../utils/sounds";
+import type { QuizStats } from "../types/quiz";
 
 export default function HomePage() {
   const router = useRouter();
-  const [stats, setStats] = useState<any>(null);
-
-  useEffect(() => {
-    setStats(getStats());
-  }, []);
+  const [stats] = useState<QuizStats>(() => getStats());
 
   return (
     <main className="min-h-screen flex items-center justify-center p-6">
@@ -121,7 +118,7 @@ export default function HomePage() {
         </div>
 
         {/* Stats */}
-        {stats && stats.totalGames > 0 && (
+        {stats.totalGames > 0 && (
           <div
             className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
             style={{ animation: "slideInUp 0.6s ease-out 0.6s both" }}

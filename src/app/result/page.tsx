@@ -5,16 +5,17 @@ import { Suspense, useEffect, useState } from "react";
 import Confetti from "../../components/Confetti";
 import { saveScore } from "../../utils/storage";
 import { playClickSound } from "../../utils/sounds";
+import type { QuizMode } from "../../types/quiz";
 
 function ResultContent() {
   const router = useRouter();
   const params = useSearchParams();
-  const [mounted, setMounted] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
   const score = Number(params.get("score") ?? 0);
   const answered = Number(params.get("answered") ?? score);
-  const mode = params.get("mode") ?? "daily";
+  const modeParam = params.get("mode");
+  const mode: QuizMode = modeParam === "speed" ? "speed" : "daily";
 
   const accuracy =
     answered > 0 ? Math.round((score / answered) * 100) : 0;
@@ -27,14 +28,12 @@ function ResultContent() {
     
     // Save score to history
     saveScore({
-      mode: mode as "daily" | "speed",
+      mode,
       score,
       total: answered,
       accuracy,
       timestamp: Date.now(),
     });
-
-    setMounted(true);
 
     // Show confetti for great scores
     if (accuracy >= 80) {
@@ -74,19 +73,11 @@ function ResultContent() {
     if (accuracy === 100) return { emoji: "🏆", text: "Perfect Score!", color: "text-yellow-400" };
     if (accuracy >= 80) return { emoji: "🌟", text: "Excellent!", color: "text-green-400" };
     if (accuracy >= 60) return { emoji: "👍", text: "Good Job!", color: "text-blue-400" };
-    if (accuracy >= 40) return { emoji: "💪", text: "Keep Practicing!", color: "text-purple-400" };
+    if (accuracy >= 40) return { emoji: "💪", text: "Keep Practicing!", color: "text-indigo-400" };
     return { emoji: "📚", text: "Keep Learning!", color: "text-pink-400" };
   };
 
   const performance = getPerformanceMessage();
-
-  if (!mounted) {
-    return (
-      <main className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-gray-300 animate-pulse">Loading results…</div>
-      </main>
-    );
-  }
 
   return (
     <main className="min-h-screen p-6 flex items-center justify-center">

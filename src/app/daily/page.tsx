@@ -1,110 +1,120 @@
 "use client";
 
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import questions from "../../data/questions/kaspa.daily.json";
-import { playCorrectSound, playWrongSound, playClickSound } from "../../utils/sounds";
+import { playClickSound, playCorrectSound, playWrongSound } from "../../utils/sounds";
+import type { QuizAnswerOption, QuizQuestion } from "../../types/quiz";
 
-type Answer = {
-  text: string;
-  isCorrect: boolean;
-};
+const DAILY_QUESTION_COUNT = 5;
 
-function shuffleAnswers(question: any): Answer[] {
-  const entries = question.choices.map((text: string, index: number) => ({
+interface DailyRound {
+  question: QuizQuestion;
+  answers: QuizAnswerOption[];
+}
+
+function shuffleAnswers(question: QuizQuestion): QuizAnswerOption[] {
+  const entries = question.choices.map((text, index) => ({
     text,
-    isCorrect: index === question.answer
+    isCorrect: index === question.answer,
   }));
 
   return [...entries].sort(() => Math.random() - 0.5);
 }
 
+function buildDailyRounds(): DailyRound[] {
+  const shuffledQuestions = [...(questions as QuizQuestion[])]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, DAILY_QUESTION_COUNT);
+
+  return shuffledQuestions.map((question) => ({
+    question,
+    answers: shuffleAnswers(question),
+  }));
+}
+
 export default function DailyPage() {
   const router = useRouter();
 
-  const [quizQuestions, setQuizQuestions] = useState<typeof questions>([]);
-  const [answers, setAnswers] = useState<Answer[]>([]);
+  const [rounds] = useState<DailyRound[]>(() => buildDailyRounds());
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [streak, setStreak] = useState(0);
 
-  // Shuffle questions ONCE (client only)
-  useEffect(() => {
-    const shuffled = [...questions].sort(() => Math.random() - 0.5);
-    setQuizQuestions(shuffled.slice(0, 5));
-  }, []);
+  const currentRound = rounds[index];
+  const answers = useMemo(() => currentRound?.answers ?? [], [currentRound]);
 
-  // Shuffle answers when question changes
-  useEffect(() => {
-    if (quizQuestions[index]) {
-      setAnswers(shuffleAnswers(quizQuestions[index]));
+  const handleAnswer = useCallback(
+    (isCorrect: boolean, answerIndex: number) => {
+      if (answered) return;
+
+      if (isCorrect) {
+        setScore((value) => value + 1);
+        setStreak((value) => value + 1);
+        playCorrectSound();
+      } else {
+        setStreak(0);
+        playWrongSound();
+      }
+
+      setSelectedAnswer(answerIndex);
+      setAnswered(true);
+    },
+    [answered]
+  );
+
+  const nextQuestion = useCallback(() => {
+    playClickSound();
+
+    if (index + 1 < rounds.length) {
+      setIndex((value) => value + 1);
       setAnswered(false);
       setSelectedAnswer(null);
+      return;
     }
-  }, [index, quizQuestions]);
 
-  // Keyboard shortcuts
+    const selectedIsCorrect =
+      selectedAnswer !== null ? Boolean(answers[selectedAnswer]?.isCorrect) : false;
+    const finalScore = score + (selectedIsCorrect ? 1 : 0);
+
+    router.push(`/result?score=${finalScore}&mode=daily`);
+  }, [answers, index, rounds.length, router, score, selectedAnswer]);
+
   useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
+    const handleKeyPress = (event: KeyboardEvent) => {
       if (answered) {
-        if (e.key === "Enter") {
-          nextQuestion();
-        }
-      } else {
-        const key = parseInt(e.key);
-        if (key >= 1 && key <= answers.length) {
-          handleAnswer(answers[key - 1].isCorrect, key - 1);
-        }
+        if (event.key === "Enter") nextQuestion();
+        return;
+      }
+
+      const parsed = Number.parseInt(event.key, 10);
+      if (parsed >= 1 && parsed <= answers.length) {
+        handleAnswer(answers[parsed - 1].isCorrect, parsed - 1);
       }
     };
 
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [answered, answers]);
+  }, [answered, answers, handleAnswer, nextQuestion]);
 
-  const q = quizQuestions[index];
+  const progress = useMemo(() => {
+    if (!rounds.length) return 0;
+    return (index / rounds.length) * 100;
+  }, [index, rounds.length]);
 
-  if (!q) {
+  if (!currentRound) {
     return (
       <main className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-gray-300 animate-pulse">Loading…</div>
+        <div className="text-2xl text-gray-300 animate-pulse">Loading...</div>
       </main>
     );
   }
 
-  function handleAnswer(isCorrect: boolean, answerIndex: number) {
-    if (answered) return;
-
-    if (isCorrect) {
-      setScore((s) => s + 1);
-      setStreak((s) => s + 1);
-      playCorrectSound();
-    } else {
-      setStreak(0);
-      playWrongSound();
-    }
-
-    setSelectedAnswer(answerIndex);
-    setAnswered(true);
-  }
-
-  function nextQuestion() {
-    playClickSound();
-    if (index + 1 < quizQuestions.length) {
-      setIndex((i) => i + 1);
-    } else {
-      router.push(`/result?score=${score + (selectedAnswer !== null && answers[selectedAnswer]?.isCorrect ? 1 : 0)}&mode=daily`);
-    }
-  }
-
-  const progress = ((index) / quizQuestions.length) * 100;
-
   return (
     <main className="min-h-screen p-6 flex items-center justify-center">
       <div className="max-w-3xl w-full">
-        {/* Header */}
         <div className="mb-8 animate-[fadeIn_0.5s_ease-out]">
           <button
             onClick={() => router.push("/")}
@@ -117,108 +127,113 @@ export default function DailyPage() {
           </button>
 
           <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+                Daily Challenge
+              </h1>
               {streak > 1 && (
-                <div className="text-xs mt-1 px-2 py-1 bg-orange-500/20 text-orange-400 rounded-full border border-orange-500/30 animate-pulse">
-                  🔥 {streak} Streak
+                <div className="text-xs mt-2 px-2 py-1 inline-flex bg-orange-500/20 text-orange-400 rounded-full border border-orange-500/30 animate-pulse">
+                  Fire streak: {streak}
                 </div>
               )}
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
-              Daily Challenge
-            </h1>
+            </div>
             <div className="text-right">
               <div className="text-3xl font-bold text-white">{score}</div>
               <div className="text-sm text-gray-400">Score</div>
             </div>
           </div>
 
-          {/* Progress Bar */}
           <div className="relative h-2 bg-white/10 rounded-full overflow-hidden">
             <div
               className="absolute h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500 ease-out"
               style={{ width: `${progress}%` }}
-            ></div>
+            />
           </div>
           <p className="text-gray-400 text-sm mt-2">
-            Question {index + 1} of {quizQuestions.length}
+            Question {index + 1} of {rounds.length}
           </p>
         </div>
 
-        {/* Question Card */}
         <div
           className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/20 mb-6 shadow-xl"
           style={{ animation: "slideInUp 0.5s ease-out" }}
-          role="heading"
-          aria-level={2}
         >
-          <p className="text-2xl font-semibold text-white leading-relaxed">
-            {q.question}
-          </p>
+          <p className="text-2xl font-semibold text-white leading-relaxed">{currentRound.question.question}</p>
         </div>
 
-        {/* Answers */}
         <div className="space-y-4">
-          {answers.map((a, i) => {
-            const isSelected = selectedAnswer === i;
-            const showCorrect = answered && a.isCorrect;
-            const showWrong = answered && isSelected && !a.isCorrect;
+          {answers.map((answer, optionIndex) => {
+            const isSelected = selectedAnswer === optionIndex;
+            const showCorrect = answered && answer.isCorrect;
+            const showWrong = answered && isSelected && !answer.isCorrect;
 
             let buttonClass = "w-full text-left p-6 rounded-xl font-medium transition-all duration-300 border-2 ";
-            
+
             if (showCorrect) {
-              buttonClass += "bg-green-500/20 border-green-500 text-white shadow-lg shadow-green-500/50 animate-[correctAnswer_0.5s_ease-out]";
+              buttonClass +=
+                "bg-green-500/20 border-green-500 text-white shadow-lg shadow-green-500/50 animate-[correctAnswer_0.5s_ease-out]";
             } else if (showWrong) {
-              buttonClass += "bg-red-500/20 border-red-500 text-white shadow-lg shadow-red-500/50 animate-[wrongAnswer_0.5s_ease-out]";
+              buttonClass +=
+                "bg-red-500/20 border-red-500 text-white shadow-lg shadow-red-500/50 animate-[wrongAnswer_0.5s_ease-out]";
             } else if (answered) {
               buttonClass += "bg-white/5 border-white/20 text-gray-400 cursor-not-allowed";
             } else {
-              buttonClass += "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-indigo-500 hover:scale-102 hover:shadow-lg hover:shadow-indigo-500/30 cursor-pointer";
+              buttonClass +=
+                "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-indigo-500 hover:scale-102 hover:shadow-lg hover:shadow-indigo-500/30 cursor-pointer";
             }
 
             return (
               <button
-                key={i}
-                onClick={() => handleAnswer(a.isCorrect, i)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    handleAnswer(a.isCorrect, i);
+                key={`${currentRound.question.id}-${optionIndex}`}
+                onClick={() => handleAnswer(answer.isCorrect, optionIndex)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    handleAnswer(answer.isCorrect, optionIndex);
                   }
                 }}
                 disabled={answered}
                 className={buttonClass}
-                style={{ animation: `slideInUp 0.5s ease-out ${0.1 * i}s both` }}
-                aria-label={`Answer ${i + 1}: ${a.text}`}
+                style={{ animation: `slideInUp 0.5s ease-out ${0.1 * optionIndex}s both` }}
+                aria-label={`Answer ${optionIndex + 1}: ${answer.text}`}
               >
                 <div className="flex items-center gap-4">
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold">
-                    {i + 1}
+                    {optionIndex + 1}
                   </div>
-                  <div className="flex-grow text-lg">{a.text}</div>
+                  <div className="flex-grow text-lg">{answer.text}</div>
                   {showCorrect && (
                     <svg className="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   )}
                   {showWrong && (
                     <svg className="w-6 h-6 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   )}
                 </div>
               </button>
             );
           })}
-        </div> active:scale-95"
-              aria-label={index + 1 < quizQuestions.length ? "Go to next question" : "View results"}
+        </div>
 
-        {/* Next Button */}
         {answered && (
           <div className="mt-8 animate-[fadeIn_0.5s_ease-out]">
             <button
               onClick={nextQuestion}
               className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/50"
+              aria-label={index + 1 < rounds.length ? "Go to next question" : "View results"}
             >
-              {index + 1 < quizQuestions.length ? "Next Question → (Press Enter)" : "See Results 🎉"}
+              {index + 1 < rounds.length ? "Next Question (Press Enter)" : "See Results"}
             </button>
           </div>
         )}

@@ -1,181 +1,109 @@
-# 🎮 Geek Mini
+# Geek Mini
 
-> Quick knowledge games powered by Geek Protocol. Test your knowledge with beautiful, engaging quiz experiences!
+A polished quiz experience for the Geek Protocol ecosystem. Geek Mini offers fast, interactive knowledge games with strong keyboard support, score history, and responsive UI.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://geek-mini.vercel.app)
-[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8)](https://tailwindcss.com/)
+## Live Demo
 
-## ✨ Features
+- `https://geek-mini.vercel.app`
 
-### 🎯 Two Game Modes
+## Core Features
 
-- **📅 Daily Challenge** - 5 carefully selected questions to perfect your score
-- **⚡ Speed Round** - Answer as many questions as you can in 30 seconds with a cooldown system
+- Daily Challenge mode with 5 randomized questions
+- Speed Round mode with a 30-second timer and cooldown
+- Keyboard-first interactions (`1-4` to answer, `Enter` to continue)
+- Local score history with best-performance stats
+- Audio feedback and confetti celebration for high scores
+- Mobile-friendly, responsive, animated UI
 
-### 🎨 Modern UI/UX
+## Tech Stack
 
-- Beautiful gradient backgrounds with glass-morphism effects
-- Smooth animations and transitions throughout
-- Responsive design that works on all devices
-- Visual feedback for correct/wrong answers with animations
-- Progress bars and performance indicators
-- Letter-labeled answer choices (number keys 1-4)
-- Pulsing timer for speed mode tension
-- Performance-based result messages (Perfect Score!, Excellent!, etc.)
-- Confetti celebration for high scores (≥80%)
-- Custom scrollbar and focus styles
+- Next.js 16 (App Router)
+- React 19
+- TypeScript 5
+- Tailwind CSS 4
 
-### 🚀 Technical Features
-
-- Built with Next.js 16 and React 19
-- Tailwind CSS 4 for styling
-- TypeScript for type safety
-- Sound effects using Web Audio API
-- Client-side question shuffling for variety
-- LocalStorage for speed mode cooldown & score history
-- Fast performance with Turbopack
-- Keyboard shortcuts (1-4 for answers, Enter for next)
-- Live streak counter with fire emoji 🔥
-- Score history tracking (last 20 games)
-- Native share API integration
-- Full accessibility support (ARIA labels, keyboard navigation)
-
-## 🏁 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- Node.js 20+ installed
-- npm, yarn, pnpm, or bun
+- Node.js 20+
+- npm 10+
 
-### Installation
+### Install and Run
 
-1. Clone the repository:
-```bash
-git clone https://github.com/GEEKProtocol0110/geek-mini.git
-cd geek-mini
-```
-
-2. Install dependencies:
 ```bash
 npm install
-```
-
-3. Run the development server:
-```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+Open `http://localhost:3000`.
 
-## 📁 Project Structure
+## Scripts
 
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
 ```
-geek-mini/
-├── src/
-│   ├── app/
-│   │   ├── daily/          # Daily challenge mode
-│   │   ├── speed/          # Speed round mode
-│   │   ├── result/         # Results page
-│   │   ├── globals.css     # Global styles and animations
-│   │   ├── layout.tsx      # Root layout
-│   │   └── page.tsx        # Home page
-│   └── data/
-│       └── questions/      # Question bank ( (or press Enter/Space)
-2. Answer 5 questions at your own pace
-3. Use keys 1-4 to select answers quickly
-4. Get immediate feedback with sound effects
-5. Build streaks for consecutive correct answers 🔥
-6. Press Enter to move to next question
-7. See your final score with confetti if you score ≥80%!
 
-### Speed Round
-1. Click "Speed Round" from the home page
-2. You have 30 seconds to answer as many questions as possible
-3. Quick feedback - correct answers highlighted in green
-4. Use keyboard shortcuts (1-4) for rapid answering
-5. Track your streak in real-time
-6. Complete cooldown required before playing again
-7. View your performance stats and share your score!
-4. See your final score and accuracy
+## Project Structure
 
-### Speed Round
-1. Click "Speed Round" from the home page
-2. You have 30 seconds to answer as many questions as possible
-3. Quick feedback - correct answers are highlighted in green
-4. Complete cooldown required before playing again
-5. View your performance stats at the end
+```text
+src/
+  app/
+    page.tsx          # Home page
+    daily/page.tsx    # Daily Challenge mode
+    speed/page.tsx    # Speed Round mode
+    result/page.tsx   # Results and share actions
+    embed/page.tsx    # Mode redirect entrypoint
+    globals.css       # Global styles and animation tokens
+    layout.tsx        # Root layout and metadata
+  components/
+    Confetti.tsx      # Celebration effect
+  data/questions/
+    kaspa.daily.json  # Question bank
+  types/
+    quiz.ts           # Shared quiz and stats types
+  utils/
+    sounds.ts         # Web Audio feedback helpers
+    storage.ts        # LocalStorage score utilities
+```
 
-## 🛠️ Built With
+## Data Model
 
-- [Next.js 16](https://nextjs.org/) - React framework
-- [React 19](https://react.dev/) - UI library
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [Tailwind CSS 4](https://tailwindcss.com/) - Styling
-- [Geist Font](https://vercel.com/font) - Typography
-
-## 🎨 Customization
-
-### Adding Questions
-
-Edit the question bank at `src/data/questions/kaspa.daily.json`:
+Each question follows this shape:
 
 ```json
 {
-  "id": "unique_id",
-  "question": "Your question here?",
-  "choices": [
-    "Option A",
-    "Option B",
-    "Option C",
-    "Option D"
-  ],
+  "id": "kaspa_001",
+  "question": "What consensus structure does Kaspa use?",
+  "choices": ["A", "B", "C", "D"],
   "answer": 1,
-  "explain": "Explanation for the correct answer"
+  "explain": "Kaspa uses a BlockDAG architecture."
 }
 ```
 
-### Styling
+## Deployment
 
-- Global styles and animations: `src/app/globals.css`
-- CSS variables for theming in the `:root` selector
-- Tailwind classes for component styling
+### Vercel
 
-## 📝 Scripts
+1. Import this repository in Vercel.
+2. Keep default Next.js build settings.
+3. Deploy.
 
-```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run start    # Start production server
-npm run lint     # Run ESLint
-```
-
-## 🚀 Deployment
-
-Deploy easily on [Vercel](https://vercel.com):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/GEEKProtocol0110/geek-mini)
-
-Or use the [Vercel CLI](https://vercel.com/docs/cli):
+Or use CLI:
 
 ```bash
-npm install -g vercel
+npm i -g vercel
 vercel
 ```
 
-## 📄 License
+## Quality Checklist
 
-This project is powered by Geek Protocol.
+- `npm run lint`
+- `npm run build`
 
-- Sound effects using Web Audio API
-- Confetti particles for celebration moments
+## License
 
----
-
-**Made with ❤️ by Geek Protocol** | [Live Demo](https://geek-mini.vercel.app)
-## 🙏 Acknowledgments
-
-- Question content focuses on Kaspa blockchain knowledge
-- Built with modern web technologies for optimal performance
-- Designed for an engaging and educational experience
+Maintained by Geek Protocol.

@@ -22,7 +22,7 @@ export const getScoreHistory = (): GameScore[] => {
   try {
     const data = localStorage.getItem("geek_mini_scores");
     return data ? JSON.parse(data) : [];
-  } catch (e) {
+  } catch {
     return [];
   }
 };

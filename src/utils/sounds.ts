@@ -1,9 +1,20 @@
 // Simple sound effects using Web Audio API
 let audioContext: AudioContext | null = null;
 
+type WebkitWindow = Window & {
+  webkitAudioContext?: typeof AudioContext;
+};
+
 const getAudioContext = () => {
   if (!audioContext) {
-    audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const win = window as WebkitWindow;
+    const AudioContextConstructor = globalThis.AudioContext || win.webkitAudioContext;
+
+    if (!AudioContextConstructor) {
+      throw new Error("Web Audio API is not supported in this browser.");
+    }
+
+    audioContext = new AudioContextConstructor();
   }
   return audioContext;
 };
@@ -25,7 +36,7 @@ export const playCorrectSound = () => {
 
     oscillator.start(ctx.currentTime);
     oscillator.stop(ctx.currentTime + 0.3);
-  } catch (e) {
+  } catch {
     // Silently fail if audio not supported
   }
 };
@@ -47,7 +58,7 @@ export const playWrongSound = () => {
 
     oscillator.start(ctx.currentTime);
     oscillator.stop(ctx.currentTime + 0.2);
-  } catch (e) {
+  } catch {
     // Silently fail if audio not supported
   }
 };
@@ -68,7 +79,7 @@ export const playClickSound = () => {
 
     oscillator.start(ctx.currentTime);
     oscillator.stop(ctx.currentTime + 0.05);
-  } catch (e) {
+  } catch {
     // Silently fail if audio not supported
   }
 };
