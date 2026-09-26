@@ -13,23 +13,43 @@ interface DailyRound {
   answers: QuizAnswerOption[];
 }
 
-function shuffleAnswers(question: QuizQuestion): QuizAnswerOption[] {
+function daySeed(day: string): number {
+  let seed = 2166136261;
+  for (const char of day) seed = Math.imul(seed ^ char.charCodeAt(0), 16777619);
+  return seed >>> 0;
+}
+
+function shuffled<T>(values: T[], seed: number): T[] {
+  const copy = [...values];
+  let state = seed || 1;
+  for (let i = copy.length - 1; i > 0; i--) {
+    state ^= state << 13;
+    state ^= state >>> 17;
+    state ^= state << 5;
+    const j = (state >>> 0) % (i + 1);
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function shuffleAnswers(question: QuizQuestion, seed: number): QuizAnswerOption[] {
   const entries = question.choices.map((text, index) => ({
     text,
     isCorrect: index === question.answer,
   }));
 
-  return [...entries].sort(() => Math.random() - 0.5);
+  return shuffled(entries, seed);
 }
 
 function buildDailyRounds(): DailyRound[] {
-  const shuffledQuestions = [...(questions as QuizQuestion[])]
-    .sort(() => Math.random() - 0.5)
+  // The same UTC day gives every visitor the same practice questions and options.
+  const seed = daySeed(new Date().toISOString().slice(0, 10));
+  const shuffledQuestions = shuffled(questions as QuizQuestion[], seed)
     .slice(0, DAILY_QUESTION_COUNT);
 
   return shuffledQuestions.map((question) => ({
     question,
-    answers: shuffleAnswers(question),
+    answers: shuffleAnswers(question, daySeed(`${seed}:${question.id}`)),
   }));
 }
 
@@ -75,12 +95,9 @@ export default function DailyPage() {
       return;
     }
 
-    const selectedIsCorrect =
-      selectedAnswer !== null ? Boolean(answers[selectedAnswer]?.isCorrect) : false;
-    const finalScore = score + (selectedIsCorrect ? 1 : 0);
-
-    router.push(`/result?score=${finalScore}&mode=daily`);
-  }, [answers, index, rounds.length, router, score, selectedAnswer]);
+    // The last answer was already included by handleAnswer.
+    router.push(`/result?score=${score}&answered=${rounds.length}&mode=daily`);
+  }, [index, rounds.length, router, score]);
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
