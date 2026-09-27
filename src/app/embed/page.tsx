@@ -1,39 +1,15 @@
 "use client";
 
-import { Suspense, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
-function EmbedContent() {
-  const router = useRouter();
+function EmbedCard() {
   const params = useSearchParams();
-
-  useEffect(() => {
-    const mode = params.get("mode");
-
-    if (mode === "daily") {
-      router.replace("/daily");
-    } else if (mode === "speed") {
-      router.replace("/speed");
-    } else {
-      router.replace("/");
-    }
-  }, [params, router]);
-
-  return (
-    <main className="min-h-screen flex items-center justify-center">
-      <div className="text-2xl text-gray-300 animate-pulse">Launching Geek Mini…</div>
-    </main>
-  );
+  const mode = params.get("mode") === "speed" ? "speed" : "daily";
+  return <main className="embed-page"><div className="embed-card"><span className="embed-card-brand">GEEK<span>{"//"}</span>MINI <small>BY GEEK PROTOCOL</small></span><div className="embed-card-content"><span className="eyebrow">KASPA KNOWLEDGE</span><h1>Know Kaspa?<br />Show us.</h1><p>{mode === "daily" ? "Five questions. One quick challenge." : "Ten questions. Thirty seconds."}</p></div><div className="embed-card-footer"><Link href={`/${mode}`} target="_blank" rel="noopener noreferrer" className="button button-primary">Play {mode === "daily" ? "the daily" : "speed round"} ↗</Link><a href="https://www.geekprotocol.xyz/" target="_blank" rel="noopener noreferrer">Discover Geek Protocol ↗</a></div></div></main>;
 }
 
 export default function EmbedPage() {
-  return (
-    <Suspense fallback={
-      <main className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-gray-300 animate-pulse">Loading…</div>
-      </main>
-    }>
-      <EmbedContent />
-    </Suspense>
-  );
+  return <Suspense fallback={<main className="embed-page">Loading Geek Mini…</main>}><EmbedCard /></Suspense>;
 }
