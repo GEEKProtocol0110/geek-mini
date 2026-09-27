@@ -1,204 +1,48 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
-import Confetti from "../../components/Confetti";
-import { saveScore } from "../../utils/storage";
-import { playClickSound } from "../../utils/sounds";
-import type { QuizMode } from "../../types/quiz";
-
-function ResultContent() {
-  const router = useRouter();
-  const params = useSearchParams();
-  const [showConfetti, setShowConfetti] = useState(false);
-
-  const score = Number(params.get("score") ?? 0);
-  const answered = Number(params.get("answered") ?? score);
-  const modeParam = params.get("mode");
-  const mode: QuizMode = modeParam === "speed" ? "speed" : "daily";
-
-  const accuracy =
-    answered > 0 ? Math.round((score / answered) * 100) : 0;
-
-  // ✅ Set cooldown AFTER finishing Speed
-  useEffect(() => {
-    if (mode === "speed") {
-      localStorage.setItem("speed_last_play", Date.now().toString());
-    }
-    
-    // Save score to history
-    saveScore({
-      mode,
-      score,
-      total: answered,
-      accuracy,
-      timestamp: Date.now(),
-    });
-
-    // Show confetti for great scores
-    if (accuracy >= 80) {
-      setTimeout(() => setShowConfetti(true), 500);
-    }
-  }, [mode, score, answered, accuracy]);
-
-  function handlePlayAgain() {
-    playClickSound();
-    if (mode === "speed") {
-      const last = localStorage.getItem("speed_last_play");
-      if (last && Date.now() - Number(last) < 30000) {
-        alert("Speed mode cooldown: please wait a few seconds.");
-        return;
-      }
-    }
-    router.push(`/${mode}`);
-  }
-
-  function shareScore() {
-    playClickSound();
-    const text = `🎮 I scored ${score}/${answered} (${accuracy}%) on Geek Mini ${mode === "daily" ? "Daily Challenge" : "Speed Round"}! Can you beat my score?`;
-    
-    if (navigator.share) {
-      navigator.share({
-        title: "Geek Mini Score",
-        text,
-        url: window.location.origin,
-      }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(text + " " + window.location.origin);
-      alert("Score copied to clipboard!");
-    }
-  }
-
-  const getPerformanceMessage = () => {
-    if (accuracy === 100) return { emoji: "🏆", text: "Perfect Score!", color: "text-yellow-400" };
-    if (accuracy >= 80) return { emoji: "🌟", text: "Excellent!", color: "text-green-400" };
-    if (accuracy >= 60) return { emoji: "👍", text: "Good Job!", color: "text-blue-400" };
-    if (accuracy >= 40) return { emoji: "💪", text: "Keep Practicing!", color: "text-indigo-400" };
-    return { emoji: "📚", text: "Keep Learning!", color: "text-pink-400" };
-  };
-
-  const performance = getPerformanceMessage();
-
-  return (
-    <main className="min-h-screen p-6 flex items-center justify-center">
-      <Confetti active={showConfetti} />
-      <div className="max-w-2xl w-full text-center space-y-8">
-        {/* Header */}
-        <div className="animate-[fadeIn_0.6s_ease-out]">
-          <div className="text-8xl mb-4" style={{ animation: "fadeIn 0.8s ease-out 0.2s both" }}>
-            {performance.emoji}
-          </div>
-          <h1 className={`text-5xl font-bold mb-2 ${performance.color}`} style={{ animation: "fadeIn 0.8s ease-out 0.3s both" }}>
-            {performance.text}
-          </h1>
-          <p className="text-gray-400 text-lg" style={{ animation: "fadeIn 0.8s ease-out 0.4s both" }}>
-            {mode === "daily" ? "Daily Challenge" : "Speed Round"} Results
-          </p>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Score */}
-          <div
-            className="bg-gradient-to-br from-indigo-600/30 to-purple-600/30 backdrop-blur-lg p-6 rounded-2xl border border-indigo-500/50"
-            style={{ animation: "slideInUp 0.6s ease-out 0.5s both" }}
-          >
-            <div className="text-6xl font-bold text-white mb-2">
-              {score}
-            </div>
-            <div className="text-indigo-200 font-medium">Correct Answers</div>
-          </div>
-
-          {/* Total */}
-          <div
-            className="bg-gradient-to-br from-purple-600/30 to-pink-600/30 backdrop-blur-lg p-6 rounded-2xl border border-purple-500/50"
-            style={{ animation: "slideInUp 0.6s ease-out 0.6s both" }}
-          >
-            <div className="text-6xl font-bold text-white mb-2">
-              {answered}
-            </div>
-            <div className="text-purple-200 font-medium">Questions Answered</div>
-          </div>
-
-          {/* Accuracy */}
-          <div
-            className="bg-gradient-to-br from-pink-600/30 to-red-600/30 backdrop-blur-lg p-6 rounded-2xl border border-pink-500/50"
-            style={{ animation: "slideInUp 0.6s ease-out 0.7s both" }}
-          >
-            <div className="text-6xl font-bold text-white mb-2">
-              {accuracy}%
-            </div>
-            <div className="text-pink-200 font-medium">Accuracy</div>
-          </div>
-        </div>
-
-        {/* Accuracy Bar */}
-        <div
-          className="bg-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/20"
-          style={{ animation: "slideInUp 0.6s ease-out 0.8s both" }}
-        >
-          <div className="text-sm text-gray-400 mb-3">Performance</div>
-          <div className="relative h-4 bg-white/10 rounded-full overflow-hidden">
-            <div
-              className="absolute h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-1000 ease-out"
-              style={{ 
-                width: `${accuracy}%`,
-                animation: "slideInUp 1s ease-out 0.9s both"
-              }}
-            ></div>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div
-          className="grid md:grid-cols-2 gap-4"
-          style={{ animation: "fadeIn 0.6s ease-out 1s both" }}
-        >
-          <button
-            onClick={handlePlayAgain}
-            className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/50"
-          >
-            🔄 Play Again
-          </button>
-
-          <button
-            onClick={() => {
-              playClickSound();
-              router.push("/");
-            }}
-            className="bg-white/10 hover:bg-white/20 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 border border-white/20"
-          >
-            🏠 Back to Home
-          </button>
-        </div>
-
-        {/* Share Section */}
-        <div
-          className="space-y-3"
-          style={{ animation: "fadeIn 0.6s ease-out 1.1s both" }}
-        >
-          <button
-            onClick={shareScore}
-            className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 hover:scale-105"
-          >
-            📤 Share Your Score
-          </button>
-          <p className="text-gray-400 text-sm">Challenge your friends! 🎉</p>
-        </div>
-      </div>
-    </main>
-  );
-}
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { SiteHeader } from "../../components/Brand";
+import { getLastResult, type RoundResult } from "../../utils/roundResult";
 
 export default function ResultPage() {
-  return (
-    <Suspense fallback={
-      <main className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-gray-300 animate-pulse">Loading results…</div>
-      </main>
-    }>
-      <ResultContent />
-    </Suspense>
-  );
-}
+  const [result, setResult] = useState<RoundResult | null>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [shareStatus, setShareStatus] = useState("");
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setResult(getLastResult());
+      setLoaded(true);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  async function share() {
+    if (!result) return;
+    const url = `${window.location.origin}/${result.mode}`;
+    const title = "Play Geek Mini";
+    const text = `I got ${result.score}/${result.total} on Geek Mini’s ${result.mode === "daily" ? "Daily Challenge" : "Speed Round"}. Try a Kaspa round yourself!`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url });
+        setShareStatus("Share ready.");
+        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(`${text} ${url}`);
+      setShareStatus("Message and challenge link copied.");
+    } catch {
+      setShareStatus("Could not copy. You can share this page’s challenge link instead: " + url);
+    }
+  }
+
+  const accuracy = result && result.total ? Math.round(result.score / result.total * 100) : 0;
+  return <><SiteHeader /><main className="result-shell shell">
+    {!loaded ? <div className="result-card"><p>Loading your result…</p></div> : !result ? <div className="result-card"><span className="eyebrow">GEEK // MINI</span><h1>Ready for a round?</h1><p>Play a challenge to see your result here.</p><Link href="/daily" className="button button-primary">Start Daily Challenge ↗</Link></div> :
+      <div className="result-card"><span className="eyebrow">ROUND COMPLETE · {result.mode === "daily" ? "DAILY CHALLENGE" : "SPEED ROUND"}</span><div className="result-big">{result.score}<span> / {result.total}</span></div><h1>{accuracy === 100 ? "Perfect round." : accuracy >= 60 ? "Nicely done." : "Keep exploring."}</h1><p>{accuracy}% correct. Every answer is a way into something new about Kaspa.</p><div className="result-detail"><div><span>YOUR ROUND</span><strong>{result.mode === "daily" ? "Daily Challenge" : "Speed Round"}</strong></div><div><span>ACCURACY</span><strong>{accuracy}%</strong></div><div><span>RECORD</span><strong>On this device</strong></div></div><div className="result-actions"><Link className="button button-primary" href={result.mode === "daily" ? "/daily" : "/speed"}>Play another round ↗</Link><button className="button button-outline" type="button" onClick={share}>Share this challenge ↗</button></div><p className="action-status" role="status" aria-live="polite">{shareStatus}</p><div className="result-next"><span>WHAT’S NEXT</span><p>There’s more to explore beyond this mini challenge.</p><a href="https://www.geekprotocol.xyz/" target="_blank" rel="noopener noreferrer">Visit Geek Protocol ↗</a></div><p className="result-disclaimer">Local practice score. No leaderboard, wallet connection, tokens, or payout.</p></div>}
+  </main></>;
+}

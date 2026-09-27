@@ -21,7 +21,16 @@ export const saveScore = (gameScore: GameScore) => {
 export const getScoreHistory = (): GameScore[] => {
   try {
     const data = localStorage.getItem("geek_mini_scores");
-    return data ? JSON.parse(data) : [];
+    if (!data) return [];
+    const parsed: unknown = JSON.parse(data);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((value): value is GameScore =>
+      value !== null && typeof value === "object" &&
+      (value.mode === "daily" || value.mode === "speed") &&
+      Number.isInteger(value.score) && Number.isInteger(value.total) &&
+      value.score >= 0 && value.total >= value.score &&
+      Number.isFinite(value.accuracy) && Number.isFinite(value.timestamp)
+    ).slice(0, 20);
   } catch {
     return [];
   }
