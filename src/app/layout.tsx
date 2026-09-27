@@ -1,25 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://geek-mini.vercel.app"),
   title: {
-    default: "Geek Mini",
+    default: "Geek Mini | Learn Kaspa. Pass it on.",
     template: "%s | Geek Mini",
   },
   description:
-    "Fast, interactive knowledge quizzes powered by Geek Protocol. Play Daily Challenge and Speed Round.",
+    "Play and share quick Kaspa knowledge challenges. Geek Mini is a free learning game by Geek Protocol.",
   applicationName: "Geek Mini",
   keywords: ["quiz", "trivia", "knowledge", "games", "kaspa", "blockchain", "learning"],
   authors: [{ name: "Geek Protocol" }],
@@ -30,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Geek Mini",
     description:
-      "Fast, interactive knowledge quizzes powered by Geek Protocol. Play Daily Challenge and Speed Round.",
+      "Play and share quick Kaspa knowledge challenges. A free learning game by Geek Protocol.",
     type: "website",
     siteName: "Geek Mini",
     url: "https://geek-mini.vercel.app",
@@ -39,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Geek Mini",
     description:
-      "Fast, interactive knowledge quizzes powered by Geek Protocol. Play Daily Challenge and Speed Round.",
+      "Play and share quick Kaspa knowledge challenges. A free learning game by Geek Protocol.",
   },
 };
 
@@ -47,7 +36,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#6366f1",
+  themeColor: "#0b1014",
 };
 
 export default function RootLayout({
@@ -60,11 +49,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

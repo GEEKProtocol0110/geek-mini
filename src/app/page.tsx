@@ -1,164 +1,46 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { getStats } from "../utils/storage";
-import { playClickSound } from "../utils/sounds";
-import type { QuizStats } from "../types/quiz";
+import Link from "next/link";
+import { SiteFooter, SiteHeader } from "../components/Brand";
+import { SupporterTools } from "../components/SupporterTools";
 
 export default function HomePage() {
-  const router = useRouter();
-  const [stats] = useState<QuizStats>(() => getStats());
-
   return (
-    <main className="min-h-screen flex items-center justify-center p-6">
-      <div className="max-w-2xl w-full text-center space-y-8 animate-[fadeIn_0.6s_ease-out]">
-        {/* Header */}
-        <div className="space-y-4">
-          <div className="inline-block">
-            <h1 className="text-6xl font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-2">
-              Geek Mini
-            </h1>
-            <div className="h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full"></div>
+    <>
+      <SiteHeader />
+      <main>
+        <section className="hero shell" aria-labelledby="hero-title">
+          <div className="hero-copy">
+            <span className="eyebrow"><span className="status-dot" /> A little game about a big idea</span>
+            <h1 id="hero-title">Learn Kaspa.<br /><span>Pass it on.</span></h1>
+            <p>Geek Mini turns Kaspa basics into a quick challenge you can play, share, or put on your own site. Made for the curious and the community that brings them in.</p>
+            <div className="hero-actions">
+              <Link className="button button-primary" href="/daily">Play today’s five <span aria-hidden="true">↗</span></Link>
+              <Link className="button button-quiet" href="#share">Share with your community <span aria-hidden="true">↓</span></Link>
+            </div>
+            <div className="hero-notes"><span>Free to play</span><span>No sign-in</span><span>About 2 minutes</span></div>
           </div>
-          <p className="text-xl text-gray-300">
-            Quick knowledge games powered by Geek Protocol
-          </p>
-        </div>
-
-        {/* Feature Cards */}
-        <div className="grid md:grid-cols-2 gap-6 mt-12">
-          {/* Daily Mode */}
-          <div
-            onClick={() => {
-              playClickSound();
-              router.push("/daily");
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                playClickSound();
-                router.push("/daily");
-              }
-            }}
-            tabIndex={0}
-            role="button"
-            aria-label="Start Daily Challenge"
-            className="group relative bg-gradient-to-br from-indigo-600 to-purple-600 p-8 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/50 focus:scale-105 focus:shadow-2xl focus:shadow-indigo-500/50"
-            style={{ animation: "slideInUp 0.6s ease-out 0.2s both" }}
-          >
-            <div className="absolute inset-0 bg-white/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative z-10">
-              <div className="text-5xl mb-4">📅</div>
-              <h2 className="text-3xl font-bold mb-3">Daily Challenge</h2>
-              <p className="text-indigo-100 mb-6">
-                5 questions to test your knowledge. Perfect your score!
-              </p>
-              <div className="inline-flex items-center text-white font-semibold">
-                Start Quiz
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </div>
-            </div>
+          <div className="hero-panel" aria-hidden="true">
+            <div className="panel-top"><span>GEEK // MINI</span><span>01 / 05</span></div>
+            <div className="panel-center"><span className="panel-k">K</span><div className="panel-orbit panel-orbit-one" /><div className="panel-orbit panel-orbit-two" /></div>
+            <div className="panel-bottom"><span>QUESTION 01</span><strong>What makes Kaspa different?</strong><span className="panel-answer"><span className="answer-indicator">✓</span> Blocks can coexist in a DAG</span></div>
           </div>
+        </section>
 
-          {/* Speed Mode */}
-          <div
-            onClick={() => {
-              playClickSound();
-              router.push("/speed");
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                playClickSound();
-                router.push("/speed");
-              }
-            }}
-            tabIndex={0}
-            role="button"
-            aria-label="Start Speed Round"
-            className="group relative bg-gradient-to-br from-pink-600 to-red-600 p-8 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-pink-500/50 focus:scale-105 focus:shadow-2xl focus:shadow-pink-500/50"
-            style={{ animation: "slideInUp 0.6s ease-out 0.4s both" }}
-          >
-            <div className="absolute inset-0 bg-white/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative z-10">
-              <div className="text-5xl mb-4">⚡</div>
-              <h2 className="text-3xl font-bold mb-3">Speed Round</h2>
-              <p className="text-pink-100 mb-6">
-                Beat the clock! Answer as many as you can in 30 seconds.
-              </p>
-              <div className="inline-flex items-center text-white font-semibold">
-                Start Challenge
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </div>
-            </div>
+        <section id="play" className="play-section shell" aria-labelledby="play-title">
+          <div className="section-heading"><div><span className="eyebrow">Pick your pace</span><h2 id="play-title">Play a round.</h2></div><p>Real questions about Kaspa. A short explanation after each answer.</p></div>
+          <div className="mode-grid">
+            <Link className="mode-card" href="/daily"><span className="mode-index">01 / DAILY</span><div className="mode-symbol" aria-hidden="true">◇</div><h3>Daily Challenge</h3><p>Five questions, one shared set each UTC day. A good first stop.</p><span className="mode-link">Start daily <span aria-hidden="true">↗</span></span></Link>
+            <Link className="mode-card" href="/speed"><span className="mode-index">02 / FAST</span><div className="mode-symbol" aria-hidden="true">⌁</div><h3>Speed Round</h3><p>Ten questions in 30 seconds. See how much you know at speed.</p><span className="mode-link">Start speed <span aria-hidden="true">↗</span></span></Link>
           </div>
-        </div>
+        </section>
 
-        {/* Stats */}
-        {stats.totalGames > 0 && (
-          <div
-            className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
-            style={{ animation: "slideInUp 0.6s ease-out 0.6s both" }}
-          >
-            <div className="p-4 bg-white/5 backdrop-blur rounded-xl border border-white/10 text-center">
-              <div className="text-2xl font-bold text-white">{stats.totalGames}</div>
-              <div className="text-xs text-gray-400 mt-1">Games Played</div>
-            </div>
-            <div className="p-4 bg-white/5 backdrop-blur rounded-xl border border-white/10 text-center">
-              <div className="text-2xl font-bold text-white">{stats.avgAccuracy}%</div>
-              <div className="text-xs text-gray-400 mt-1">Avg Accuracy</div>
-            </div>
-            <div className="p-4 bg-white/5 backdrop-blur rounded-xl border border-white/10 text-center">
-              <div className="text-2xl font-bold text-indigo-400">
-                {stats.bestDaily?.accuracy || 0}%
-              </div>
-              <div className="text-xs text-gray-400 mt-1">Best Daily</div>
-            </div>
-            <div className="p-4 bg-white/5 backdrop-blur rounded-xl border border-white/10 text-center">
-              <div className="text-2xl font-bold text-pink-400">
-                {stats.bestSpeed?.score || 0}
-              </div>
-              <div className="text-xs text-gray-400 mt-1">Best Speed</div>
-            </div>
-          </div>
-        )}
+        <section id="share" className="share-section shell" aria-labelledby="share-title">
+          <div className="share-copy"><span className="eyebrow">Made to travel</span><h2 id="share-title">Give your community something to play.</h2><p>Kaspa supporters can send the Daily Challenge or add a small Geek Mini card to a website. Every route invites people to explore Geek Protocol after they play.</p><SupporterTools /><span className="subtle-note">Sharing is open to everyone. There are no referral payouts or wallet requirements.</span></div>
+          <div className="embed-preview" aria-hidden="true"><span className="embed-label">ON YOUR SITE</span><div className="embed-inner"><div className="mini-symbol">◇</div><span className="embed-kicker">GEEK // MINI</span><strong>Know Kaspa?<br />Show us.</strong><span className="embed-button">Play the daily challenge ↗</span></div><span className="embed-corner">POWERED BY GEEK PROTOCOL</span></div>
+        </section>
 
-        <div
-          className="mt-6 p-6 bg-white/5 backdrop-blur rounded-xl border border-white/10"
-          style={{ animation: "slideInUp 0.6s ease-out 0.7s both" }}
-        >
-          <p className="text-sm text-gray-400 mb-2">Powered by</p>
-          <p className="text-lg font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-            Geek Protocol
-          </p>
-          <p className="text-xs text-gray-500 mt-2">
-            💡 Tip: Use keys 1-4 to answer questions quickly!
-          </p>
-        </div>
-      </div>
-    </main>
+        <section className="closing-section shell"><span className="eyebrow">The bigger world</span><h2>Curiosity starts here.<br /><span>Keep going with Geek Protocol.</span></h2><p>Geek Mini is a lightweight introduction to the learning games and community at Geek Protocol.</p><a className="button button-outline" href="https://www.geekprotocol.xyz/" target="_blank" rel="noopener noreferrer">Explore Geek Protocol <span aria-hidden="true">↗</span></a></section>
+      </main>
+      <SiteFooter />
+    </>
   );
 }
