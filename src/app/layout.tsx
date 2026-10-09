@@ -26,6 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    images: [{ url: "/opengraph-image", alt: "Geek Mini · Learn Kaspa. Pass it on." }],
     title: "Geek Mini",
     description:
       "Play and share quick Kaspa knowledge challenges. A free learning game by Geek Protocol.",

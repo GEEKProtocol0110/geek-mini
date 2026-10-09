@@ -26,7 +26,7 @@ export default function HomePage() {
         </section>
 
         <section id="play" className="play-section shell" aria-labelledby="play-title">
-          <div className="section-heading"><div><span className="eyebrow">Pick your pace</span><h2 id="play-title">Play a round.</h2></div><p>Real questions about Kaspa. A short explanation after each answer.</p></div>
+          <div className="section-heading"><div><span className="eyebrow">Pick your pace</span><h2 id="play-title">Play a round.</h2></div><p>52 source-backed questions about Kaspa. Explanations and a review after every round.</p></div>
           <div className="mode-grid">
             <Link className="mode-card" href="/daily"><span className="mode-index">01 / DAILY</span><div className="mode-symbol" aria-hidden="true">◇</div><h3>Daily Challenge</h3><p>Five questions, one shared set each UTC day. A good first stop.</p><span className="mode-link">Start daily <span aria-hidden="true">↗</span></span></Link>
             <Link className="mode-card" href="/speed"><span className="mode-index">02 / FAST</span><div className="mode-symbol" aria-hidden="true">⌁</div><h3>Speed Round</h3><p>Ten questions in 30 seconds. See how much you know at speed.</p><span className="mode-link">Start speed <span aria-hidden="true">↗</span></span></Link>
@@ -34,8 +34,8 @@ export default function HomePage() {
         </section>
 
         <section id="share" className="share-section shell" aria-labelledby="share-title">
-          <div className="share-copy"><span className="eyebrow">Made to travel</span><h2 id="share-title">Give your community something to play.</h2><p>Kaspa supporters can send the Daily Challenge or add a small Geek Mini card to a website. Every route invites people to explore Geek Protocol after they play.</p><SupporterTools /><span className="subtle-note">Sharing is open to everyone. There are no referral payouts or wallet requirements.</span></div>
-          <div className="embed-preview" aria-hidden="true"><span className="embed-label">ON YOUR SITE</span><div className="embed-inner"><div className="mini-symbol">◇</div><span className="embed-kicker">GEEK // MINI</span><strong>Know Kaspa?<br />Show us.</strong><span className="embed-button">Play the daily challenge ↗</span></div><span className="embed-corner">POWERED BY GEEK PROTOCOL</span></div>
+          <div className="share-copy"><span className="eyebrow">Made to travel</span><h2 id="share-title">Give your community something to play.</h2><p>Choose Daily or Speed, preview the card and copy an embed for your website. Or send a challenge link to your community.</p></div>
+          <SupporterTools />
         </section>
 
         <section className="closing-section shell"><span className="eyebrow">The bigger world</span><h2>Curiosity starts here.<br /><span>Keep going with Geek Protocol.</span></h2><p>Geek Mini is a lightweight introduction to the learning games and community at Geek Protocol.</p><a className="button button-outline" href="https://www.geekprotocol.xyz/" target="_blank" rel="noopener noreferrer">Explore Geek Protocol <span aria-hidden="true">↗</span></a></section>

@@ -76,3 +76,30 @@ test('score history remains bounded to twenty entries', () => {
   const history = JSON.parse(localStorage.getItem('geek_mini_scores'));
   assert.equal(history.length, 20); assert.equal(history[0].timestamp, now);
 });
+
+test('review receipts survive reload without copying answers into score history', () => {
+  const { questionBank } = require('../src/utils/questionBank.ts');
+  const review = questionBank.slice(0, 5).map(q => ({ questionId: q.id, selected: q.answer }));
+  const result = fresh().finishRound('daily', 5, 5, { utcDate: '1970-01-01', review });
+  assert.deepEqual(fresh().getLastResult(), result);
+  assert.equal(result.review.length, 5);
+  review[0].selected = null;
+  assert.notEqual(result.review[0].selected, null, 'The receipt owns a copy of each answer');
+  assert.equal(JSON.parse(localStorage.getItem('geek_mini_scores'))[0].review, undefined);
+});
+
+test('incompatible or malformed reviews do not erase an otherwise valid older score', () => {
+  const { questionBank, bankVersion } = require('../src/utils/questionBank.ts');
+  const q = questionBank[0];
+  const base = { mode: 'speed', score: 1, total: 1, timestamp: now, historySaved: true, bankVersion, review: [{ questionId: q.id, selected: q.answer }] };
+  for (const changes of [{ bankVersion: 'older' }, { review: null }, { review: [{ questionId: 'unknown', selected: 0 }] }, { review: [{ questionId: q.id, selected: (q.answer + 1) % 4 }] }]) {
+    sessionStorage.setItem('geek_mini_last_result', JSON.stringify({ ...base, ...changes }));
+    const result = fresh().getLastResult(); assert.equal(result.score, 1); assert.equal(result.review, undefined);
+  }
+});
+
+test('Daily retains the generation date when finishing after UTC midnight', () => {
+  now = Date.parse('2026-10-10T00:00:05Z');
+  const api = fresh(); const result = api.finishRound('daily', 2, 5, { utcDate: '2026-10-09' });
+  assert.equal(result.utcDate, '2026-10-09'); assert.equal(fresh().getLastResult().utcDate, '2026-10-09');
+});

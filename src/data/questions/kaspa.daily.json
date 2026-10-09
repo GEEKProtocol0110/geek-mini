@@ -1,122 +1,938 @@
 [
   {
-    "id": "kaspa_001",
-    "question": "What consensus structure does Kaspa use?",
+    "id": "mini_consensus",
+    "topic": "Kaspa basics",
+    "question": "What secures Kaspa consensus?",
     "choices": [
-      "Proof of Stake",
-      "BlockDAG",
-      "Single-chain Proof of Work",
-      "Layer 2 Rollups"
-    ],
-    "answer": 1,
-    "explain": "Kaspa uses a BlockDAG, allowing blocks to be processed in parallel."
-  },
-  {
-    "id": "kaspa_002",
-    "question": "Kaspa is secured using which consensus mechanism?",
-    "choices": [
-      "Proof of Stake",
-      "Proof of Work",
-      "Delegated Proof of Stake",
-      "Proof of Authority"
-    ],
-    "answer": 1,
-    "explain": "Kaspa uses Proof of Work for security."
-  },
-  {
-    "id": "kaspa_003",
-    "question": "What is one of Kaspa’s main design goals?",
-    "choices": [
-      "High throughput without sacrificing decentralization",
-      "Privacy-first transactions",
-      "Smart contract execution",
-      "Centralized validation"
+      "Proof of work",
+      "Proof of stake",
+      "A bank committee",
+      "Social-media votes"
     ],
     "answer": 0,
-    "explain": "Kaspa focuses on speed and scalability while remaining decentralized."
+    "explain": "Miners contribute computational work to secure the network.",
+    "source": {
+      "label": "Kaspa · Lore",
+      "url": "https://kaspa.org/lore"
+    },
+    "reviewedAt": "2026-10-09"
   },
   {
-    "id": "kaspa_004",
-    "question": "What allows Kaspa to achieve faster block processing?",
+    "id": "mini_structure",
+    "topic": "Kaspa basics",
+    "question": "How is Kaspa’s block history structured?",
     "choices": [
-      "Sharding",
-      "BlockDAG parallel blocks",
-      "Centralized miners",
-      "Layer 2 channels"
+      "A private database",
+      "A blockDAG",
+      "One mandatory linear chain",
+      "A spreadsheet"
     ],
     "answer": 1,
-    "explain": "Kaspa’s BlockDAG allows many blocks to be confirmed simultaneously."
+    "explain": "Kaspa orders parallel blocks within a directed graph.",
+    "source": {
+      "label": "Kaspa · Lore",
+      "url": "https://kaspa.org/lore"
+    },
+    "reviewedAt": "2026-10-09"
   },
   {
-    "id": "kaspa_005",
-    "question": "Which hashing algorithm does Kaspa use?",
+    "id": "mini_launch",
+    "topic": "Kaspa basics",
+    "question": "In which year did Kaspa mainnet launch?",
     "choices": [
-      "SHA-256",
-      "Ethash",
-      "kHeavyHash",
-      "Scrypt"
+      "2017",
+      "2024",
+      "2021",
+      "2015"
     ],
     "answer": 2,
-    "explain": "Kaspa uses the kHeavyHash Proof-of-Work algorithm."
+    "explain": "Mainnet launched in November 2021.",
+    "source": {
+      "label": "Kaspa · Lore",
+      "url": "https://kaspa.org/lore"
+    },
+    "reviewedAt": "2026-10-09"
   },
   {
-    "id": "kaspa_006",
-    "question": "Kaspa aims to scale without compromising which core blockchain property?",
+    "id": "mini_fair_launch",
+    "topic": "Kaspa basics",
+    "question": "What was absent from Kaspa’s fair launch?",
     "choices": [
-      "Centralization",
-      "Decentralization",
-      "Permissioned access",
-      "Validator slashing"
+      "Public mining",
+      "Open participation",
+      "A genesis block",
+      "A premine"
     ],
-    "answer": 1,
-    "explain": "Maintaining decentralization is a core goal of Kaspa."
+    "answer": 3,
+    "explain": "KAS began without premine, presales or insider allocations.",
+    "source": {
+      "label": "Kaspa · Lore",
+      "url": "https://kaspa.org/lore"
+    },
+    "reviewedAt": "2026-10-09"
   },
   {
-    "id": "kaspa_007",
-    "question": "What problem does Kaspa’s BlockDAG design primarily solve?",
+    "id": "mini_research",
+    "topic": "Kaspa basics",
+    "question": "Which university was part of Kaspa’s research origins?",
     "choices": [
-      "Slow transaction finality",
-      "Mining centralization",
-      "Smart contract execution",
-      "High gas fees"
+      "Hebrew University of Jerusalem",
+      "University of Tokyo",
+      "University of Toronto",
+      "University of Sydney"
     ],
     "answer": 0,
-    "explain": "BlockDAG allows high throughput and faster confirmations."
+    "explain": "Its research roots include Hebrew University and later Harvard.",
+    "source": {
+      "label": "Kaspa · Lore",
+      "url": "https://kaspa.org/lore"
+    },
+    "reviewedAt": "2026-10-09"
   },
   {
-    "id": "kaspa_008",
-    "question": "Kaspa belongs to which category of blockchain networks?",
+    "id": "mini_north_star",
+    "topic": "Kaspa basics",
+    "question": "What does Kaspa call its north star?",
     "choices": [
-      "Proof-of-Stake Layer 1",
-      "Proof-of-Work Layer 1",
-      "Layer 2 scaling network",
-      "Sidechain"
+      "A single transaction leader",
+      "Real-time decentralization",
+      "Private settlement",
+      "Token-based voting"
     ],
     "answer": 1,
-    "explain": "Kaspa is a Proof-of-Work Layer 1 blockchain."
+    "explain": "Fast consensus and decentralization are central design goals.",
+    "source": {
+      "label": "Kaspa · Lore",
+      "url": "https://kaspa.org/lore"
+    },
+    "reviewedAt": "2026-10-09"
   },
   {
-    "id": "kaspa_009",
-    "question": "What makes Kaspa different from traditional linear blockchains?",
+    "id": "mini_dag_name",
+    "topic": "Blocks and consensus",
+    "question": "What does DAG stand for?",
     "choices": [
-      "It uses smart contracts",
-      "It processes blocks sequentially",
-      "It allows multiple blocks at the same time",
-      "It is permissioned"
+      "Digital asset group",
+      "Direct approval grid",
+      "Directed acyclic graph",
+      "Distributed account gateway"
     ],
     "answer": 2,
-    "explain": "Kaspa allows multiple blocks to coexist via its BlockDAG structure."
+    "explain": "A DAG has directed links without cycles.",
+    "source": {
+      "label": "Kaspa Wiki · Kaspa",
+      "url": "https://wiki.kaspa.org/en/kaspa"
+    },
+    "reviewedAt": "2026-10-09"
   },
   {
-    "id": "kaspa_010",
-    "question": "What is a key benefit of Kaspa’s fast block times?",
+    "id": "mini_parents",
+    "topic": "Blocks and consensus",
+    "question": "A Kaspa block can reference how many parent blocks?",
     "choices": [
-      "Lower decentralization",
-      "Faster transaction confirmations",
-      "Higher validator requirements",
-      "Reduced network security"
+      "Exactly one always",
+      "No parents ever",
+      "Only its own future block",
+      "More than one"
+    ],
+    "answer": 3,
+    "explain": "Multiple parent references connect parallel branches.",
+    "source": {
+      "label": "Kaspa Wiki · Kaspa",
+      "url": "https://wiki.kaspa.org/en/kaspa"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_ordering",
+    "topic": "Blocks and consensus",
+    "question": "What does GHOSTDAG establish for parallel blocks?",
+    "choices": [
+      "A consensus ordering",
+      "A token exchange rate",
+      "A wallet password",
+      "A staking committee"
+    ],
+    "answer": 0,
+    "explain": "Ordering lets participants agree on transaction history.",
+    "source": {
+      "label": "Kaspa Wiki · Kaspa",
+      "url": "https://wiki.kaspa.org/en/kaspa"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_double_spend",
+    "topic": "Blocks and consensus",
+    "question": "Why does transaction ordering matter for conflicting spends?",
+    "choices": [
+      "It removes signature checks",
+      "It determines which spend can be accepted",
+      "It accepts both spends",
+      "It creates extra coins"
     ],
     "answer": 1,
-    "explain": "Fast block times improve confirmation speed without sacrificing security."
+    "explain": "Accepted transactions must not contradict earlier accepted spends.",
+    "source": {
+      "label": "Kaspa Wiki · Kaspa",
+      "url": "https://wiki.kaspa.org/en/kaspa"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_throughput",
+    "topic": "Blocks and consensus",
+    "question": "What tradeoff motivated GHOSTDAG research?",
+    "choices": [
+      "Token price versus logos",
+      "Wallet size versus screen size",
+      "Throughput versus security from orphaned blocks",
+      "Passwords versus usernames"
+    ],
+    "answer": 2,
+    "explain": "Frequent parallel blocks challenge traditional chain-based consensus.",
+    "source": {
+      "label": "Kaspa Wiki · Kaspa",
+      "url": "https://wiki.kaspa.org/en/kaspa"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_rust",
+    "topic": "Network history",
+    "question": "Which language powers Rusty Kaspa?",
+    "choices": [
+      "Ruby",
+      "PHP",
+      "Swift",
+      "Rust"
+    ],
+    "answer": 3,
+    "explain": "Rusty Kaspa is the Rust full-node reference implementation.",
+    "source": {
+      "label": "Rusty Kaspa · README",
+      "url": "https://github.com/kaspanet/rusty-kaspa"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_predecessor",
+    "topic": "Network history",
+    "question": "Which language powered Kaspa’s earlier node?",
+    "choices": [
+      "Go",
+      "Java",
+      "C#",
+      "Kotlin"
+    ],
+    "answer": 0,
+    "explain": "The Rust node replaced the earlier Go implementation.",
+    "source": {
+      "label": "Rusty Kaspa · README",
+      "url": "https://github.com/kaspanet/rusty-kaspa"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_crescendo",
+    "topic": "Network history",
+    "question": "Which upgrade raised Kaspa from 1 to 10 blocks per second?",
+    "choices": [
+      "Taproot",
+      "Crescendo",
+      "SegWit",
+      "The Merge"
+    ],
+    "answer": 1,
+    "explain": "Crescendo increased mainnet’s block rate in May 2025.",
+    "source": {
+      "label": "Rusty Kaspa · README",
+      "url": "https://github.com/kaspanet/rusty-kaspa"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_crescendo_date",
+    "topic": "Network history",
+    "question": "In which year did Crescendo activate?",
+    "choices": [
+      "2022",
+      "2024",
+      "2025",
+      "2021"
+    ],
+    "answer": 2,
+    "explain": "The hardfork took place on May 5, 2025.",
+    "source": {
+      "label": "Rusty Kaspa · README",
+      "url": "https://github.com/kaspanet/rusty-kaspa"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_stable",
+    "topic": "Network history",
+    "question": "Which Rusty Kaspa branch corresponds to a stable release?",
+    "choices": [
+      "experimental-only",
+      "draft",
+      "sandbox",
+      "stable"
+    ],
+    "answer": 3,
+    "explain": "The README separates stable releases from ongoing master development.",
+    "source": {
+      "label": "Rusty Kaspa · README",
+      "url": "https://github.com/kaspanet/rusty-kaspa"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_wasm",
+    "topic": "Network history",
+    "question": "What allows Rusty Kaspa libraries to run through a browser SDK?",
+    "choices": [
+      "WebAssembly",
+      "A staking validator",
+      "An exchange listing",
+      "A paper wallet"
+    ],
+    "answer": 0,
+    "explain": "WASM builds expose Rust functionality to JavaScript applications.",
+    "source": {
+      "label": "Rusty Kaspa · README",
+      "url": "https://github.com/kaspanet/rusty-kaspa"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_hardware",
+    "topic": "Wallet basics",
+    "question": "Where does a hardware wallet keep private keys?",
+    "choices": [
+      "In your receiving address",
+      "On the device",
+      "In a public explorer",
+      "Inside a transaction ID"
+    ],
+    "answer": 1,
+    "explain": "Hardware wallets isolate private keys from the host computer.",
+    "source": {
+      "label": "Kaspa · Wallet and custody guide",
+      "url": "https://kaspa.org/hodl"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_backup",
+    "topic": "Wallet basics",
+    "question": "What can preserve wallet recovery after losing a device?",
+    "choices": [
+      "A price alert",
+      "A block number",
+      "A proper recovery backup",
+      "A social-media handle"
+    ],
+    "answer": 2,
+    "explain": "Follow the wallet’s recovery-phrase or backup instructions.",
+    "source": {
+      "label": "Kaspa · Wallet and custody guide",
+      "url": "https://kaspa.org/hodl"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_receive",
+    "topic": "Wallet basics",
+    "question": "Which wallet action gives an address for incoming KAS?",
+    "choices": [
+      "Delete wallet",
+      "Export password",
+      "Change theme",
+      "Receive"
+    ],
+    "answer": 3,
+    "explain": "The Receive screen supplies your destination address.",
+    "source": {
+      "label": "Kaspa · Wallet and custody guide",
+      "url": "https://kaspa.org/hodl"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_test_transfer",
+    "topic": "Wallet basics",
+    "question": "What can check a transfer route before a larger send?",
+    "choices": [
+      "A small test transaction",
+      "A new profile picture",
+      "A token poll",
+      "A browser bookmark"
+    ],
+    "answer": 0,
+    "explain": "Verify that a test transfer arrives at the intended wallet.",
+    "source": {
+      "label": "Kaspa · Wallet and custody guide",
+      "url": "https://kaspa.org/hodl"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_exchange_delay",
+    "topic": "Wallet basics",
+    "question": "Why might an exchange withdrawal wait despite a fast network?",
+    "choices": [
+      "KAS needs a staking period",
+      "Exchange processing or holds",
+      "The address changes coin supply",
+      "Every block requires an email"
+    ],
+    "answer": 1,
+    "explain": "An exchange’s withdrawal process can add its own delay.",
+    "source": {
+      "label": "Kaspa · Wallet and custody guide",
+      "url": "https://kaspa.org/hodl"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_qr",
+    "topic": "Wallet basics",
+    "question": "What can a mobile wallet scan to help send a payment?",
+    "choices": [
+      "A block reward table",
+      "A compiler log",
+      "A QR code",
+      "A mining fan"
+    ],
+    "answer": 2,
+    "explain": "Mobile wallets can read payment details from QR codes.",
+    "source": {
+      "label": "Kaspa · Wallet and custody guide",
+      "url": "https://kaspa.org/hodl"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_utxo_name",
+    "topic": "Transactions",
+    "question": "What does UTXO stand for?",
+    "choices": [
+      "Universal token exchange order",
+      "Unsigned transfer execution option",
+      "User transaction ownership",
+      "Unspent transaction output"
+    ],
+    "answer": 3,
+    "explain": "UTXOs are outputs that remain available to spend.",
+    "source": {
+      "label": "Kaspa Wiki · UTXO",
+      "url": "https://wiki.kaspa.org/en/utxo"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_utxo_spend",
+    "topic": "Transactions",
+    "question": "Can one UTXO be spent partially?",
+    "choices": [
+      "No, it is consumed completely",
+      "Yes, indefinitely",
+      "Only on weekends",
+      "Only after staking"
+    ],
+    "answer": 0,
+    "explain": "Spending consumes the whole output; new outputs carry resulting amounts.",
+    "source": {
+      "label": "Kaspa Wiki · UTXO",
+      "url": "https://wiki.kaspa.org/en/utxo"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_utxo_create",
+    "topic": "Transactions",
+    "question": "What does a transaction create after consuming its inputs?",
+    "choices": [
+      "A staking identity",
+      "New transaction outputs",
+      "New wallet passwords",
+      "A second mainnet"
+    ],
+    "answer": 1,
+    "explain": "Transactions replace spent outputs with newly created outputs.",
+    "source": {
+      "label": "Kaspa Wiki · UTXO",
+      "url": "https://wiki.kaspa.org/en/utxo"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_change",
+    "topic": "Transactions",
+    "question": "Where does leftover input value go after amount and fees?",
+    "choices": [
+      "Into a new premine",
+      "It always disappears",
+      "A change output",
+      "Automatically to an exchange"
+    ],
+    "answer": 2,
+    "explain": "Change sends the remaining value back to the wallet.",
+    "source": {
+      "label": "Kaspa Wiki · Wallet FAQ",
+      "url": "https://wiki.kaspa.org/en/faq"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_compound",
+    "topic": "Transactions",
+    "question": "What does compounding wallet UTXOs do?",
+    "choices": [
+      "Doubles the supply",
+      "Changes consensus to staking",
+      "Replaces the recovery phrase",
+      "Combines smaller outputs into larger ones"
+    ],
+    "answer": 3,
+    "explain": "Compounding reduces the number of separate unspent outputs.",
+    "source": {
+      "label": "Kaspa Wiki · Wallet FAQ",
+      "url": "https://wiki.kaspa.org/en/faq"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_node_reward",
+    "topic": "Transactions",
+    "question": "Does merely running a Kaspa node earn a staking reward?",
+    "choices": [
+      "No",
+      "Yes, for every peer",
+      "Yes, after a login",
+      "Yes, for every wallet"
+    ],
+    "answer": 0,
+    "explain": "Running a node supports connectivity; it is not proof-of-stake validation.",
+    "source": {
+      "label": "Kaspa Wiki · Wallet FAQ",
+      "url": "https://wiki.kaspa.org/en/faq"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_sompi",
+    "topic": "KAS units",
+    "question": "What is Kaspa’s smallest base unit called?",
+    "choices": [
+      "Gwei",
+      "Sompi",
+      "Satoshi",
+      "Wei"
+    ],
+    "answer": 1,
+    "explain": "KAS amounts are represented in integer sompi.",
+    "source": {
+      "label": "Rusty Kaspa · Monetary units",
+      "url": "https://github.com/kaspanet/rusty-kaspa/blob/master/consensus/core/src/constants.rs"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_sompi_count",
+    "topic": "KAS units",
+    "question": "How many sompi equal 1 KAS?",
+    "choices": [
+      "1,000,000",
+      "1,000,000,000",
+      "100,000,000",
+      "1,000"
+    ],
+    "answer": 2,
+    "explain": "The node defines 100 million sompi per KAS.",
+    "source": {
+      "label": "Rusty Kaspa · Monetary units",
+      "url": "https://github.com/kaspanet/rusty-kaspa/blob/master/consensus/core/src/constants.rs"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_rpc",
+    "topic": "Builder basics",
+    "question": "What interface connects an application to a Kaspa node?",
+    "choices": [
+      "A price widget",
+      "A recovery phrase",
+      "A mint ticker",
+      "RPC"
+    ],
+    "answer": 3,
+    "explain": "RPC lets applications request data from a node.",
+    "source": {
+      "label": "Kaspa Docs · Getting started",
+      "url": "https://docs.kaspa.org/integrate/getting-started"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_sdk_languages",
+    "topic": "Builder basics",
+    "question": "Which language has an example in Kaspa’s getting-started guide?",
+    "choices": [
+      "Python",
+      "COBOL",
+      "Scratch",
+      "BASIC"
+    ],
+    "answer": 0,
+    "explain": "The guide includes JavaScript, Rust and Python examples.",
+    "source": {
+      "label": "Kaspa Docs · Getting started",
+      "url": "https://docs.kaspa.org/integrate/getting-started"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_dag_info",
+    "topic": "Builder basics",
+    "question": "Which SDK call reads current DAG information?",
+    "choices": [
+      "setTokenLogo",
+      "getBlockDagInfo",
+      "getStockPrice",
+      "getSeedPhrase"
+    ],
+    "answer": 1,
+    "explain": "The RPC call returns information about the node’s blockDAG.",
+    "source": {
+      "label": "Kaspa Docs · Getting started",
+      "url": "https://docs.kaspa.org/integrate/getting-started"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_node_binary",
+    "topic": "Node basics",
+    "question": "What is the Kaspa node executable called?",
+    "choices": [
+      "kaspa-price",
+      "krc-minter",
+      "kaspad",
+      "kaswallet-browser"
+    ],
+    "answer": 2,
+    "explain": "kaspad runs the network node used by integrations.",
+    "source": {
+      "label": "Kaspa Docs · Kaspa node",
+      "url": "https://docs.kaspa.org/integrate/kaspa-node"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_node_index",
+    "topic": "Node basics",
+    "question": "Which node flag enables UTXO indexing?",
+    "choices": [
+      "--staking",
+      "--premine",
+      "--token-logo",
+      "--utxoindex"
+    ],
+    "answer": 3,
+    "explain": "UTXO indexing supports address-based wallet queries.",
+    "source": {
+      "label": "Kaspa Docs · Kaspa node",
+      "url": "https://docs.kaspa.org/integrate/kaspa-node"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_docker",
+    "topic": "Node basics",
+    "question": "What is one documented way to run a Kaspa node?",
+    "choices": [
+      "Docker",
+      "A spreadsheet macro",
+      "A social-media poll",
+      "A token swap"
+    ],
+    "answer": 0,
+    "explain": "The node guide offers source builds and a Docker image.",
+    "source": {
+      "label": "Kaspa Docs · Kaspa node",
+      "url": "https://docs.kaspa.org/integrate/kaspa-node"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_checkpoint",
+    "topic": "Network events",
+    "question": "What helps a transaction reader resume after disconnecting?",
+    "choices": [
+      "A price target",
+      "A saved checkpoint",
+      "A new seed phrase",
+      "A new ticker"
+    ],
+    "answer": 1,
+    "explain": "A durable checkpoint records the position already processed.",
+    "source": {
+      "label": "Kaspa Docs · Accepted transactions",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_reorg",
+    "topic": "Network events",
+    "question": "What should an indexer do with data from removed chain blocks?",
+    "choices": [
+      "Mint compensating KAS",
+      "Change wallet passwords",
+      "Roll back affected derived data",
+      "Ignore every removal"
+    ],
+    "answer": 2,
+    "explain": "Reconciliation removes old-path effects before applying replacement transactions.",
+    "source": {
+      "label": "Kaspa Docs · Accepted transactions",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_confirmations",
+    "topic": "Network events",
+    "question": "Why keep a confirmation buffer when ingesting transactions?",
+    "choices": [
+      "It increases coin supply",
+      "It reveals private keys",
+      "It gives a token its logo",
+      "Recent virtual-chain state can still change"
+    ],
+    "answer": 3,
+    "explain": "Near-tip changes require careful acceptance and rollback handling.",
+    "source": {
+      "label": "Kaspa Docs · Accepted transactions",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_payload",
+    "topic": "Application data",
+    "question": "Which transaction field can carry application data?",
+    "choices": [
+      "Payload",
+      "Wallet password",
+      "Recovery phrase",
+      "Exchange username"
+    ],
+    "answer": 0,
+    "explain": "Applications can attach data through a transaction’s payload field.",
+    "source": {
+      "label": "Kaspa Docs · Transaction payload",
+      "url": "https://docs.kaspa.org/integrate/transaction-payload"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_payload_limit",
+    "topic": "Application data",
+    "question": "Is transaction payload space unlimited?",
+    "choices": [
+      "Only for hardware wallets",
+      "No, standard mempool limits apply",
+      "Yes, always",
+      "Only for verified profiles"
+    ],
+    "answer": 1,
+    "explain": "Payload bytes share transaction size and mass limits with other fields.",
+    "source": {
+      "label": "Kaspa Docs · Transaction payload",
+      "url": "https://docs.kaspa.org/integrate/transaction-payload"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_covenants",
+    "topic": "Programmability",
+    "question": "What do Kaspa covenants describe?",
+    "choices": [
+      "A guaranteed token price",
+      "Social-media moderation",
+      "Rules for spending and evolving outputs",
+      "Exchange opening hours"
+    ],
+    "answer": 2,
+    "explain": "Covenants express asset and stateful-output rules directly on L1.",
+    "source": {
+      "label": "Kaspa Docs · Programmability overview",
+      "url": "https://docs.kaspa.org/programmability"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_based_apps",
+    "topic": "Programmability",
+    "question": "Which model does the guide suggest for shared app state?",
+    "choices": [
+      "A private-key list",
+      "A token logo",
+      "A wallet theme",
+      "Based Apps"
+    ],
+    "answer": 3,
+    "explain": "Based Apps address applications with accounts and shared state.",
+    "source": {
+      "label": "Kaspa Docs · Programmability overview",
+      "url": "https://docs.kaspa.org/programmability"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_inline_zk",
+    "topic": "Programmability",
+    "question": "What does Inline ZK let an individual action carry?",
+    "choices": [
+      "A proof for independent verification",
+      "A staking vote",
+      "An exchange password",
+      "An automatic price promise"
+    ],
+    "answer": 0,
+    "explain": "Inline ZK suits actions with their own proof or validity check.",
+    "source": {
+      "label": "Kaspa Docs · Programmability overview",
+      "url": "https://docs.kaspa.org/programmability"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_vprogs",
+    "topic": "Programmability",
+    "question": "How does the overview describe Full vProgs?",
+    "choices": [
+      "A shipped exchange",
+      "A future direction for app composition",
+      "A wallet recovery code",
+      "A mining algorithm"
+    ],
+    "answer": 1,
+    "explain": "The guide identifies Full vProgs as an end goal, not a current universal feature.",
+    "source": {
+      "label": "Kaspa Docs · Programmability overview",
+      "url": "https://docs.kaspa.org/programmability"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_krc_deploy",
+    "topic": "KRC-20",
+    "question": "Which KRC-20 operation establishes a token?",
+    "choices": [
+      "list",
+      "send",
+      "deploy",
+      "transfer"
+    ],
+    "answer": 2,
+    "explain": "Deployment defines the token before later operations use it.",
+    "source": {
+      "label": "Kasplex Kiwi · KRC-20 examples",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/examples/krc20.test.ts"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_krc_mint",
+    "topic": "KRC-20",
+    "question": "Which KRC-20 operation mints a deploy-mint token?",
+    "choices": [
+      "transfer",
+      "blacklist",
+      "chown",
+      "mint"
+    ],
+    "answer": 3,
+    "explain": "Mint requests token issuance under the deployed token’s rules.",
+    "source": {
+      "label": "Kasplex Kiwi · KRC-20 examples",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/examples/krc20.test.ts"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_krc_transfer",
+    "topic": "KRC-20",
+    "question": "Which operation moves an existing KRC-20 balance?",
+    "choices": [
+      "transfer",
+      "deploy",
+      "mint",
+      "chown"
+    ],
+    "answer": 0,
+    "explain": "Transfer specifies an amount and a recipient.",
+    "source": {
+      "label": "Kasplex Kiwi · KRC-20 examples",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/examples/krc20.test.ts"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_krc_tick",
+    "topic": "KRC-20",
+    "question": "In ticker-based KRC-20 data, what does tick identify?",
+    "choices": [
+      "A timestamp",
+      "The token ticker",
+      "A private key",
+      "A mining fan"
+    ],
+    "answer": 1,
+    "explain": "Ticker-based operations identify their token through tick.",
+    "source": {
+      "label": "Kasplex Kiwi · KRC-20 examples",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/examples/krc20.test.ts"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_krc_to",
+    "topic": "KRC-20",
+    "question": "Which transfer field holds the recipient address?",
+    "choices": [
+      "op",
+      "tick",
+      "to",
+      "p"
+    ],
+    "answer": 2,
+    "explain": "The Kasplex example places the destination address in to.",
+    "source": {
+      "label": "Kasplex Kiwi · KRC-20 examples",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/examples/krc20.test.ts"
+    },
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_krc_p",
+    "topic": "KRC-20",
+    "question": "Which protocol marker is used in KRC-20 operation data?",
+    "choices": [
+      "erc-20",
+      "btc-20",
+      "kas-password",
+      "krc-20"
+    ],
+    "answer": 3,
+    "explain": "The p field identifies the KRC-20 protocol.",
+    "source": {
+      "label": "Kasplex Kiwi · KRC-20 examples",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/examples/krc20.test.ts"
+    },
+    "reviewedAt": "2026-10-09"
   }
 ]

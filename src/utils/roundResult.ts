@@ -1,5 +1,6 @@
 import type { QuizMode } from "../types/quiz";
 import { saveScore } from "./storage";
+import { bankVersion, isUtcDate, validReview, type RoundReview } from "./questionBank";
 
 const RESULT_KEY = "geek_mini_last_result";
 const SPEED_KEY = "speed_last_play";
@@ -12,9 +13,12 @@ export interface RoundResult {
   total: number;
   timestamp: number;
   historySaved: boolean;
+  utcDate?: string;
+  bankVersion?: string;
+  review?: RoundReview[];
 }
 
-export function finishRound(mode: QuizMode, score: number, total: number): RoundResult {
+export function finishRound(mode: QuizMode, score: number, total: number, context: { utcDate?: string; review?: RoundReview[] } = {}): RoundResult {
   const timestamp = Date.now();
   const result: RoundResult = {
     mode,
@@ -23,6 +27,11 @@ export function finishRound(mode: QuizMode, score: number, total: number): Round
     timestamp,
     historySaved: saveScore({ mode, score, total, accuracy: total ? Math.round(score / total * 100) : 0, timestamp }),
   };
+  if (mode === "daily" && isUtcDate(context.utcDate)) result.utcDate = context.utcDate;
+  if (validReview(context.review, score, total, mode)) {
+    result.review = context.review.map(item => ({ ...item }));
+    result.bankVersion = bankVersion;
+  }
   memoryResult = result;
   try {
     sessionStorage.setItem(RESULT_KEY, JSON.stringify(result));
@@ -52,7 +61,13 @@ export function getLastResult(): RoundResult | null {
       (result.historySaved !== undefined && typeof result.historySaved !== "boolean")
     ) return null;
     // Older receipts have no save acknowledgement. Do not claim persistence.
-    return { ...result, historySaved: result.historySaved === true };
+    const receipt: RoundResult = { mode: result.mode, score: result.score, total: result.total, timestamp: result.timestamp, historySaved: result.historySaved === true };
+    if (result.mode === "daily" && isUtcDate(result.utcDate) && result.utcDate <= new Date(result.timestamp).toISOString().slice(0, 10)) receipt.utcDate = result.utcDate;
+    if (result.bankVersion === bankVersion && validReview(result.review, result.score, result.total, result.mode)) {
+      receipt.review = result.review;
+      receipt.bankVersion = bankVersion;
+    }
+    return receipt;
   } catch {
     return null;
   }
