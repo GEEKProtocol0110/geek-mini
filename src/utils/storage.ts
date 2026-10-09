@@ -6,15 +6,16 @@ export interface GameScore {
   timestamp: number;
 }
 
-export const saveScore = (gameScore: GameScore) => {
+export const saveScore = (gameScore: GameScore): boolean => {
   try {
     const scores = getScoreHistory();
     scores.unshift(gameScore);
     // Keep only last 20 scores
     const trimmed = scores.slice(0, 20);
     localStorage.setItem("geek_mini_scores", JSON.stringify(trimmed));
-  } catch (e) {
-    console.error("Failed to save score:", e);
+    return true;
+  } catch {
+    return false;
   }
 };
 
