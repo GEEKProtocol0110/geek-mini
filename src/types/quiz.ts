@@ -6,6 +6,9 @@ export interface QuizQuestion {
   choices: string[];
   answer: number;
   explain: string;
+  topic: string;
+  source: { label: string; url: string };
+  reviewedAt: string;
 }
 
 export interface QuizAnswerOption {
