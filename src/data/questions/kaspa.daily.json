@@ -934,5 +934,437 @@
       "url": "https://github.com/kasplex/sdk-kiwi/blob/main/examples/krc20.test.ts"
     },
     "reviewedAt": "2026-10-09"
+  },
+  {
+    "id": "mini_fee_difference",
+    "question": "Inputs total 10 KAS and all outputs total 9.99 KAS. What is the fee?",
+    "choices": [
+      "0.01 KAS",
+      "9.99 KAS",
+      "10 KAS",
+      "19.99 KAS"
+    ],
+    "answer": 0,
+    "explain": "The fee is the difference: 10 minus 9.99 equals 0.01 KAS. This is a fictional arithmetic example, not a fee quote.",
+    "topic": "Transactions",
+    "source": {
+      "label": "Kaspa transaction fee guide",
+      "url": "https://kaspa.aspectron.org/transactions/fees/index.html"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_fee_change",
+    "question": "Which amounts count when subtracting outputs from inputs to find a fee?",
+    "choices": [
+      "Only the recipient output",
+      "All outputs, including change",
+      "Only the change output",
+      "The number of wallet tabs"
+    ],
+    "answer": 1,
+    "explain": "Count every output, including change. Subtracting only the recipient amount would mistake change for a fee.",
+    "topic": "Transactions",
+    "source": {
+      "label": "Kaspa transaction fee guide",
+      "url": "https://kaspa.aspectron.org/transactions/fees/index.html"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_fee_subsidy",
+    "question": "Does paying a transaction fee create new KAS?",
+    "choices": [
+      "Yes, it is another block subsidy",
+      "Only if the wallet is new",
+      "No, it uses existing input value",
+      "Yes, each fee doubles the supply"
+    ],
+    "answer": 2,
+    "explain": "A fee comes from the transaction’s existing input value. It is not new issuance.",
+    "topic": "Transactions",
+    "source": {
+      "label": "Kaspa transaction fee guide",
+      "url": "https://kaspa.aspectron.org/transactions/fees/index.html"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_fee_approval",
+    "question": "Which is the best place to review the actual cost of a proposed payment?",
+    "choices": [
+      "An old screenshot of a different payment",
+      "A fixed estimate in a quiz",
+      "The color of the app icon",
+      "The wallet’s current transaction review"
+    ],
+    "answer": 3,
+    "explain": "Fees depend on the proposed transaction. Use its wallet review rather than treating this lesson’s examples as quotations.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_two_inputs",
+    "question": "A payment consumes two UTXOs. What happens to those original outputs?",
+    "choices": [
+      "Both are consumed as transaction inputs",
+      "Half of each original output stays unspent",
+      "Both become wallet passwords",
+      "Neither can ever be spent"
+    ],
+    "answer": 0,
+    "explain": "Inputs consume existing unspent outputs. Any remaining value belongs in new outputs, not a partly spent original output.",
+    "topic": "Transactions",
+    "source": {
+      "label": "Kaspa UTXO reference",
+      "url": "https://wiki.kaspa.org/en/utxo"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_change_math",
+    "question": "In a fictional payment, 8 KAS of inputs fund 3 KAS to a recipient and a 0.01 KAS fee. How much change remains?",
+    "choices": [
+      "8 KAS",
+      "4.99 KAS",
+      "5.01 KAS",
+      "11 KAS"
+    ],
+    "answer": 1,
+    "explain": "Eight minus three minus 0.01 is 4.99 KAS. The example illustrates value accounting; it does not estimate a real fee.",
+    "topic": "Transactions",
+    "source": {
+      "label": "Kaspa transaction fee guide",
+      "url": "https://kaspa.aspectron.org/transactions/fees/index.html"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_output_identity",
+    "question": "What identifies a particular UTXO within a transaction?",
+    "choices": [
+      "Only its coin amount",
+      "A player nickname",
+      "The transaction ID and output index",
+      "The time shown on a phone"
+    ],
+    "answer": 2,
+    "explain": "A transaction can create several outputs. Its transaction ID and the output’s index distinguish one output from the others.",
+    "topic": "Transactions",
+    "source": {
+      "label": "Kaspa UTXO reference",
+      "url": "https://wiki.kaspa.org/en/utxo"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_unspent_only",
+    "question": "Which outputs can be selected as inputs for a new valid spend?",
+    "choices": [
+      "Any output from any old screenshot",
+      "Already consumed outputs",
+      "A profile badge",
+      "Available unspent outputs"
+    ],
+    "answer": 3,
+    "explain": "A previously consumed output cannot be reused. Input selection works with outputs that remain unspent.",
+    "topic": "Transactions",
+    "source": {
+      "label": "Kaspa UTXO reference",
+      "url": "https://wiki.kaspa.org/en/utxo"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_fraction_quarter",
+    "question": "How many sompi are in 0.25 KAS?",
+    "choices": [
+      "25,000,000",
+      "250,000",
+      "2,500",
+      "25"
+    ],
+    "answer": 0,
+    "explain": "One KAS is 100 million sompi. Multiplying by one quarter gives 25 million sompi.",
+    "topic": "KAS units",
+    "source": {
+      "label": "Rusty Kaspa consensus constants",
+      "url": "https://github.com/kaspanet/rusty-kaspa/blob/master/consensus/core/src/constants.rs"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_fraction_one",
+    "question": "How much KAS is 1 sompi?",
+    "choices": [
+      "1 KAS",
+      "0.00000001 KAS",
+      "0.01 KAS",
+      "100,000,000 KAS"
+    ],
+    "answer": 1,
+    "explain": "A sompi is one hundred-millionth of a KAS, expressed at eight decimal places.",
+    "topic": "KAS units",
+    "source": {
+      "label": "Rusty Kaspa consensus constants",
+      "url": "https://github.com/kaspanet/rusty-kaspa/blob/master/consensus/core/src/constants.rs"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_fraction_two",
+    "question": "A balance has 250,000,000 sompi. What is it in KAS?",
+    "choices": [
+      "250 KAS",
+      "0.25 KAS",
+      "2.5 KAS",
+      "25,000 KAS"
+    ],
+    "answer": 2,
+    "explain": "Divide the integer sompi amount by 100 million: 250 million sompi is 2.5 KAS.",
+    "topic": "KAS units",
+    "source": {
+      "label": "Rusty Kaspa consensus constants",
+      "url": "https://github.com/kaspanet/rusty-kaspa/blob/master/consensus/core/src/constants.rs"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_fraction_exact",
+    "question": "Why keep coin amounts as integer sompi while calculating?",
+    "choices": [
+      "To hide every payment",
+      "To make the price fixed",
+      "To create extra coins",
+      "To avoid floating-point rounding in base-unit arithmetic"
+    ],
+    "answer": 3,
+    "explain": "Integer base units preserve exact coin amounts. Convert carefully when displaying decimal KAS.",
+    "topic": "KAS units",
+    "source": {
+      "label": "Rusty Kaspa consensus constants",
+      "url": "https://github.com/kaspanet/rusty-kaspa/blob/master/consensus/core/src/constants.rs"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_wallet_resident",
+    "question": "What does resident: true mean in the documented Wallet API?",
+    "choices": [
+      "A memory-only wallet that is not persisted",
+      "A wallet stored on every miner",
+      "An account with guaranteed recovery",
+      "A permanent online backup"
+    ],
+    "answer": 0,
+    "explain": "The documented resident mode is memory-only. Persistence and key backup are separate concerns.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_wallet_start",
+    "question": "After connecting the Wallet API, which step begins processing and event delivery?",
+    "choices": [
+      "Renaming the token",
+      "Starting the wallet",
+      "Sharing its private key",
+      "Changing the site’s logo"
+    ],
+    "answer": 1,
+    "explain": "The wallet’s start operation begins its processing and events after connection.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_wallet_account",
+    "question": "Before using an account through the Wallet API, what does the guide tell an app to do?",
+    "choices": [
+      "Assume every account is the same",
+      "Erase all other accounts",
+      "Select and activate the intended account",
+      "Publish the recovery phrase"
+    ],
+    "answer": 2,
+    "explain": "Enumerate the accounts, select the intended account, and activate it. This avoids confusing account selection with simply connecting.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_wallet_storage",
+    "question": "Where do browser builds of the documented Wallet API keep transaction records?",
+    "choices": [
+      "Inside an image file",
+      "In the quiz score URL",
+      "In the recovery phrase",
+      "IndexedDB"
+    ],
+    "answer": 3,
+    "explain": "The guide distinguishes transaction records in IndexedDB from wallet data in localStorage.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_reader_fields",
+    "question": "A builder needs payloads and other accepted-transaction fields. Which documented call provides that view?",
+    "choices": [
+      "getVirtualChainFromBlockV2",
+      "getBalanceScreenshot",
+      "approveAllPayments",
+      "createProfileBadge"
+    ],
+    "answer": 0,
+    "explain": "The V2 accepted-transaction call provides transaction fields. The ID-only alternative serves a different data need.",
+    "topic": "Network events",
+    "source": {
+      "label": "Kaspa accepted-transaction guide",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_reader_id_only",
+    "question": "A builder only needs accepted transaction references. What should that view return?",
+    "choices": [
+      "Secret wallet keys",
+      "Accepted transaction IDs",
+      "Invented token balances",
+      "Only profile names"
+    ],
+    "answer": 1,
+    "explain": "The accepted-transactions guide provides an ID-only flow when full transaction objects are unnecessary.",
+    "topic": "Network events",
+    "source": {
+      "label": "Kaspa accepted-transaction guide",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_reader_after_pass",
+    "question": "When should a reader persist its new checkpoint?",
+    "choices": [
+      "Before it processes anything",
+      "Whenever the page color changes",
+      "After a successful processing pass",
+      "Only after erasing all history"
+    ],
+    "answer": 2,
+    "explain": "Save a checkpoint after processing succeeds. Advancing it before processing can skip work after a failure.",
+    "topic": "Network events",
+    "source": {
+      "label": "Kaspa accepted-transaction guide",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_reader_filter",
+    "question": "A listener receives more events than its app needs. Which documented pattern reduces unnecessary work?",
+    "choices": [
+      "Make up fewer transactions",
+      "Discard all failed requests silently",
+      "Publish private keys",
+      "Filter unwanted transactions early"
+    ],
+    "answer": 3,
+    "explain": "The guide recommends filtering unnecessary transactions early in a pipeline.",
+    "topic": "Network events",
+    "source": {
+      "label": "Kaspa accepted-transaction guide",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_payload_overhead",
+    "question": "Why is the useful payload capacity lower when a transaction has more other fields?",
+    "choices": [
+      "Inputs, outputs and signatures share the serialized-size budget",
+      "A token ticker fixes the limit",
+      "Phone brightness controls capacity",
+      "An app badge increases the limit"
+    ],
+    "answer": 0,
+    "explain": "The serialized transaction includes more than its payload. Other fields consume space within the same standard limit.",
+    "topic": "Application data",
+    "source": {
+      "label": "Kaspa transaction payload guide",
+      "url": "https://docs.kaspa.org/integrate/transaction-payload"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_payload_encoding",
+    "question": "Which JavaScript example turns a text label into payload bytes?",
+    "choices": [
+      "Math.random()",
+      "TextEncoder",
+      "A recovery-phrase textbox",
+      "A screenshot crop"
+    ],
+    "answer": 1,
+    "explain": "The payload guide uses TextEncoder to encode text as bytes. That does not make secret data safe to publish.",
+    "topic": "Application data",
+    "source": {
+      "label": "Kaspa transaction payload guide",
+      "url": "https://docs.kaspa.org/integrate/transaction-payload"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_payload_secret",
+    "question": "Should a builder put a recovery phrase in public transaction application data?",
+    "choices": [
+      "Yes, it improves confirmation",
+      "Only if the transaction is fast",
+      "No, secret wallet material must stay private",
+      "Yes, every payload is an encrypted backup"
+    ],
+    "answer": 2,
+    "explain": "A payload is application data, not a secret backup mechanism. Keep recovery material out of public transactions.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_reader_queue",
+    "question": "What can sit between a transaction listener and slower independent workers?",
+    "choices": [
+      "A fabricated receipt",
+      "A new seed phrase",
+      "A price promise",
+      "A processing queue"
+    ],
+    "answer": 3,
+    "explain": "The accepted-transactions guide suggests a queue to separate ingestion from downstream work.",
+    "topic": "Network events",
+    "source": {
+      "label": "Kaspa accepted-transaction guide",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-11"
   }
 ]

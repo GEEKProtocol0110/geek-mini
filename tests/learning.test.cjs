@@ -5,11 +5,11 @@ const { questionBank, validReview, isUtcDate } = require('../src/utils/questionB
 const { challengeShare, embedMarkup } = require('../src/utils/share.ts');
 
 test('the public learning bank has distinct reviewed prompts, unambiguous choices and primary sources', () => {
-  assert.ok(questionBank.length >= 50 && questionBank.length <= 100);
+  assert.ok(questionBank.length >= 76 && questionBank.length <= 200);
   assert.equal(new Set(questionBank.map(q => q.id)).size, questionBank.length);
   assert.equal(new Set(questionBank.map(q => q.question.trim().toLowerCase())).size, questionBank.length);
   assert.ok(new Set(questionBank.map(q => q.topic)).size >= 10);
-  const hosts = new Set(['kaspa.org', 'wiki.kaspa.org', 'docs.kaspa.org', 'github.com']);
+  const hosts = new Set(['kaspa.org', 'wiki.kaspa.org', 'docs.kaspa.org', 'kaspa.aspectron.org', 'github.com']);
   for (const question of questionBank) {
     assert.equal(question.choices.length, 4, question.id);
     assert.equal(new Set(question.choices.map(c => c.trim().toLowerCase())).size, 4, question.id);
@@ -77,4 +77,15 @@ test('native sharing cancellation is quiet and clipboard failure stays actionabl
     if (navigatorDescriptor) Object.defineProperty(globalThis, 'navigator', navigatorDescriptor); else delete globalThis.navigator;
     if (windowDescriptor) Object.defineProperty(globalThis, 'window', windowDescriptor); else delete globalThis.window;
   }
+});
+
+
+test('every question routes to a real HQ curriculum topic and missed recommendations are bounded and deduplicated', () => {
+  const {lessonFor,missedLessons}=require('../src/utils/learningPath.ts');
+  const topics=new Set(['origins','blockdag','mining','emission','wallets','tokens','ecosystem','fundamentals']);
+  for(const q of questionBank){const lesson=lessonFor(q);assert.ok(lesson);assert.ok(topics.has(lesson.topic));const url=new URL(lesson.href);assert.equal(url.origin,'https://www.geekprotocol.xyz');assert.equal(url.pathname,'/study/');assert.equal(url.searchParams.get('level'),'foundations');}
+  const wrong=questionBank.map(q=>({questionId:q.id,selected:(q.answer+1)%4}));
+  const suggestions=missedLessons(wrong);assert.equal(suggestions.length,3);assert.equal(new Set(suggestions.map(l=>l.topic)).size,3);
+  assert.deepEqual(missedLessons(questionBank.map(q=>({questionId:q.id,selected:q.answer}))),[]);
+  assert.deepEqual(missedLessons([{questionId:'unknown',selected:0}]),[]);
 });

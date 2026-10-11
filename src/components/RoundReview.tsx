@@ -1,4 +1,5 @@
 "use client";
+import { lessonFor } from "../utils/learningPath";
 import { useState } from "react";
 import { questionById, type RoundReview as ReviewItem } from "../utils/questionBank";
 
@@ -17,7 +18,7 @@ export function RoundReview({ items }: { items?: ReviewItem[] }) {
       const status = item.selected === null ? "Not answered" : correct ? "Correct" : "Missed";
       return <details className="review-item" key={item.questionId}>
         <summary><span className="review-number">{String(index + 1).padStart(2, "0")}</span><span>{question.question}</span><span className={`review-status${correct ? " review-correct" : ""}`}>{status}</span></summary>
-        <div className="review-body"><dl><div><dt>Your answer</dt><dd>{item.selected === null ? "Time ran out before an answer." : question.choices[item.selected]}</dd></div><div><dt>Correct answer</dt><dd>{question.choices[question.answer]}</dd></div></dl><p>{question.explain}</p><a className="source-link" href={question.source.url} target="_blank" rel="noopener noreferrer">{question.source.label} ↗</a></div>
+        <div className="review-body"><dl><div><dt>Your answer</dt><dd>{item.selected === null ? "Time ran out before an answer." : question.choices[item.selected]}</dd></div><div><dt>Correct answer</dt><dd>{question.choices[question.answer]}</dd></div></dl><p>{question.explain}</p><a className="source-link" href={question.source.url} target="_blank" rel="noopener noreferrer">{question.source.label} ↗</a>{lessonFor(question) && <p><a className="source-link" href={lessonFor(question)!.href} target="_blank" rel="noopener noreferrer">Explore this topic with A.C.E. ↗</a></p>}</div>
       </details>;
     })}
   </section>;
