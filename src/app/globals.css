@@ -180,3 +180,14 @@ button:focus-visible, a:focus-visible { outline:2px solid var(--mint); outline-o
 .live-embed-preview iframe { display:block; width:100%; border:0; border-radius:12px; margin-top:14px; }
 @media(max-width:800px) { .supporter-workbench { grid-template-columns:1fr; } }
 @media(max-width:600px) { .start-panel { padding:25px; } .game-top { flex-wrap:wrap; } .review-item summary { flex-wrap:wrap; gap:7px; padding:14px; } .review-item summary>span:nth-child(2) { flex:1 1 80%; } .review-status { margin-left:24px; } .review-body { padding-inline:14px; } }
+
+/* Keep the countdown visible while answers remain comfortable to tap. */
+.speed-heading{position:sticky;top:0;z-index:2;background:#0b1014f5;padding-block:12px;backdrop-filter:blur(10px)}
+.time-urgent .game-numbers strong{color:#ffc18b}.timer-alert{color:#ffc18b;font-size:13px}
+.result-share-card{text-align:left;margin:30px 0;border:1px solid var(--line);border-radius:14px;padding:22px;background:#101d20}
+.result-share-card h2{font-size:25px;margin:12px 0}.result-share-card p{color:#b8cdca;line-height:1.65}
+.result-share-card canvas{display:block;width:100%;height:auto;border:1px solid #42665e;border-radius:10px;margin:20px 0}
+.review-filters{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.review-filters button{min-height:44px;padding:10px 14px;border-radius:8px;background:transparent;border:1px solid #416162;color:#c8ddd7}
+.review-filters button[aria-pressed=true]{background:#83e5d8;color:#0b1014;border-color:#83e5d8}
+button:disabled{cursor:default}.result-actions{flex-wrap:wrap}
+@media(max-width:600px){.answers-grid{grid-template-columns:1fr}.answer-option{min-height:64px}.result-share-card{padding:16px}.result-actions .button{width:100%;justify-content:center}.game-heading{gap:12px}.game-heading h1{font-size:clamp(24px,7vw,36px)}}
