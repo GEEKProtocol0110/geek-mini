@@ -175,9 +175,10 @@ export function GameClient({ mode }: { mode: QuizMode }) {
   return (
     <><SiteHeader /><main className="game-shell shell">
       <div className="game-top"><Link href="/" className="back-link">← Back to Mini</Link><span className="game-kind">{mode === "daily" ? `${utcDate} UTC · FIVE QUESTIONS` : "TEN QUESTIONS · 30 SECONDS"}</span></div>
-      <div className="game-heading"><div><span className="eyebrow">GEEK // MINI</span><h1>{title}</h1></div><div className="game-numbers"><span>{mode === "speed" ? "TIME LEFT" : "YOUR SCORE"}</span><strong aria-live="off">{mode === "speed" ? `${seconds}s` : `${score} / ${rounds.length}`}</strong></div></div>
+      <div className={`game-heading${mode === "speed" ? " speed-heading" : ""}${mode === "speed" && seconds <= 5 ? " time-urgent" : ""}`}><div><span className="eyebrow">GEEK // MINI</span><h1>{title}</h1></div><div className="game-numbers"><span>{mode === "speed" ? "TIME LEFT" : "YOUR SCORE"}</span><strong aria-live="off">{mode === "speed" ? `${seconds}s` : `${score} / ${rounds.length}`}</strong></div></div>
+      {mode === "speed" && seconds <= 5 && <p className="timer-alert" role="status">Five seconds or less. Finish the answer you know.</p>}
       <div className="progress-track" role="progressbar" aria-valuenow={index + 1} aria-valuemin={1} aria-valuemax={rounds.length} aria-label="Question progress"><div style={{ width: `${((index + 1) / rounds.length) * 100}%` }} /></div>
-      <div className="game-subline"><span>QUESTION {String(index + 1).padStart(2, "0")} / {String(rounds.length).padStart(2, "0")}</span><span>{mode === "speed" ? `${answeredCount} answered · ${score} correct` : "Use keys 1–4 to answer"}</span></div>
+      <div className="game-subline"><span>QUESTION {String(index + 1).padStart(2, "0")} / {String(rounds.length).padStart(2, "0")}</span><span>{mode === "speed" ? `${answeredCount} answered · ${score} correct` : "Tap an answer or use keys 1–4"}</span></div>
       <section className="question-panel" aria-labelledby="question-title"><div className="question-label">{current.question.topic}</div><h2 id="question-title" ref={questionHeading} tabIndex={-1}>{current.question.question}</h2></section>
       <div className="answers-grid">{current.choices.map((choice, option) => {
         const status = selected === null ? "" : choice.isCorrect ? " answer-correct" : selected === option ? " answer-wrong" : " answer-muted";
