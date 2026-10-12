@@ -1,5 +1,5 @@
 import type { QuizMode } from "../types/quiz";
-import { saveScore } from "./storage";
+import { saveScore, SCORE_KEY } from "./storage";
 import { bankVersion, isUtcDate, validReview, type RoundReview } from "./questionBank";
 
 const RESULT_KEY = "geek_mini_last_result";
@@ -25,9 +25,10 @@ export function finishRound(mode: QuizMode, score: number, total: number, contex
     score,
     total,
     timestamp,
-    historySaved: saveScore({ mode, score, total, accuracy: total ? Math.round(score / total * 100) : 0, timestamp }),
+    historySaved: false,
   };
   if (mode === "daily" && isUtcDate(context.utcDate)) result.utcDate = context.utcDate;
+  result.historySaved = saveScore({ mode, score, total, accuracy: total ? Math.round(score / total * 100) : 0, timestamp, utcDate: result.utcDate });
   if (validReview(context.review, score, total, mode)) {
     result.review = context.review.map(item => ({ ...item }));
     result.bankVersion = bankVersion;
@@ -81,4 +82,16 @@ export function getSpeedCooldown(): number {
     if (Number.isSafeInteger(stored) && stored > 0 && stored <= now) lastPlay = Math.max(lastPlay, stored);
   } catch { /* A blocked store cannot suppress the visit-only cooldown. */ }
   return lastPlay ? Math.max(0, Math.min(30, Math.ceil((30000 - (now - lastPlay)) / 1000))) : 0;
+}
+
+/** Clear only Mini's three records; attempt each independently when a store is blocked. */
+export function clearPracticeData(): boolean {
+  memoryResult = null;
+  memorySpeedAt = 0;
+  let cleared = true;
+  for (const key of [SCORE_KEY, SPEED_KEY]) {
+    try { localStorage.removeItem(key); } catch { cleared = false; }
+  }
+  try { sessionStorage.removeItem(RESULT_KEY); } catch { cleared = false; }
+  return cleared;
 }
