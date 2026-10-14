@@ -1,6 +1,7 @@
 import type { QuizMode } from "../types/quiz";
 import { saveScore, SCORE_KEY } from "./storage";
 import { bankVersion, isUtcDate, validReview, type RoundReview } from "./questionBank";
+import { isSpeedFocus, type SpeedFocus } from "./speedFocus";
 
 const RESULT_KEY = "geek_mini_last_result";
 const SPEED_KEY = "speed_last_play";
@@ -16,9 +17,10 @@ export interface RoundResult {
   utcDate?: string;
   bankVersion?: string;
   review?: RoundReview[];
+  focus?: SpeedFocus;
 }
 
-export function finishRound(mode: QuizMode, score: number, total: number, context: { utcDate?: string; review?: RoundReview[] } = {}): RoundResult {
+export function finishRound(mode: QuizMode, score: number, total: number, context: { utcDate?: string; review?: RoundReview[]; focus?: SpeedFocus } = {}): RoundResult {
   const timestamp = Date.now();
   const result: RoundResult = {
     mode,
@@ -28,7 +30,8 @@ export function finishRound(mode: QuizMode, score: number, total: number, contex
     historySaved: false,
   };
   if (mode === "daily" && isUtcDate(context.utcDate)) result.utcDate = context.utcDate;
-  result.historySaved = saveScore({ mode, score, total, accuracy: total ? Math.round(score / total * 100) : 0, timestamp, utcDate: result.utcDate });
+  if (mode === "speed" && isSpeedFocus(context.focus)) result.focus = context.focus;
+  result.historySaved = saveScore({ mode, score, total, accuracy: total ? Math.round(score / total * 100) : 0, timestamp, utcDate: result.utcDate, focus: result.focus });
   if (validReview(context.review, score, total, mode)) {
     result.review = context.review.map(item => ({ ...item }));
     result.bankVersion = bankVersion;
@@ -64,6 +67,7 @@ export function getLastResult(): RoundResult | null {
     // Older receipts have no save acknowledgement. Do not claim persistence.
     const receipt: RoundResult = { mode: result.mode, score: result.score, total: result.total, timestamp: result.timestamp, historySaved: result.historySaved === true };
     if (result.mode === "daily" && isUtcDate(result.utcDate) && result.utcDate <= new Date(result.timestamp).toISOString().slice(0, 10)) receipt.utcDate = result.utcDate;
+    if (result.mode === "speed" && isSpeedFocus(result.focus)) receipt.focus = result.focus;
     if (result.bankVersion === bankVersion && validReview(result.review, result.score, result.total, result.mode)) {
       receipt.review = result.review;
       receipt.bankVersion = bankVersion;

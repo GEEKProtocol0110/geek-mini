@@ -1366,5 +1366,437 @@
       "url": "https://docs.kaspa.org/integrate/accepted-transactions"
     },
     "reviewedAt": "2026-10-11"
+  },
+  {
+    "id": "mini_wallet_encryption",
+    "question": "What does walletSecret protect in the documented Wallet API?",
+    "choices": [
+      "Encrypted wallet storage",
+      "Public block order",
+      "Mining difficulty",
+      "Token prices"
+    ],
+    "answer": 0,
+    "explain": "It derives the key that encrypts wallet storage.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa Wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_wallet_passphrase",
+    "question": "What is paymentSecret in the documented Wallet API?",
+    "choices": [
+      "A mining reward",
+      "An optional mnemonic passphrase",
+      "A public ticker",
+      "A node address"
+    ],
+    "answer": 1,
+    "explain": "The guide separates the mnemonic passphrase from wallet storage encryption.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa Wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_wallet_native_store",
+    "question": "Where does the native Wallet API persist its wallet data?",
+    "choices": [
+      "Every block header",
+      "The token ticker",
+      "The local filesystem",
+      "A public payload"
+    ],
+    "answer": 2,
+    "explain": "Native Rust, Node.js and Python use local filesystem storage.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa Wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_wallet_balance_event",
+    "question": "Which Wallet API event reports balance changes?",
+    "choices": [
+      "discovery",
+      "error",
+      "maturity",
+      "balance"
+    ],
+    "answer": 3,
+    "explain": "The guide lists balance among wallet events.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa Wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_wallet_connect",
+    "question": "What does connect() do in the documented Wallet API?",
+    "choices": [
+      "Attaches to a node",
+      "Mints a token",
+      "Starts a miner",
+      "Deletes all accounts"
+    ],
+    "answer": 0,
+    "explain": "Connection and wallet processing are separate lifecycle steps.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa Wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_wallet_send_call",
+    "question": "Which Wallet API call sends funds to external addresses?",
+    "choices": [
+      "getBlockDagInfo",
+      "accountsSend",
+      "accountsEnumerate",
+      "walletOpen"
+    ],
+    "answer": 1,
+    "explain": "The send example supplies an account and destination outputs.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kaspa Wallet guide",
+      "url": "https://docs.kaspa.org/integrate/wallet"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_node_borsh_listener",
+    "question": "Which documented node flag enables the Borsh wRPC listener?",
+    "choices": [
+      "--help",
+      "--version",
+      "--rpclisten-borsh",
+      "--utxoindex"
+    ],
+    "answer": 2,
+    "explain": "The integration command enables a separate Borsh listener.",
+    "topic": "Node basics",
+    "source": {
+      "label": "Kaspa node guide",
+      "url": "https://docs.kaspa.org/integrate/kaspa-node"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_node_cargo",
+    "question": "Which tool builds kaspad in the source-based integration example?",
+    "choices": [
+      "A web wallet",
+      "A block explorer",
+      "A token indexer",
+      "Cargo"
+    ],
+    "answer": 3,
+    "explain": "The guide runs the Rust binary through cargo run.",
+    "topic": "Node basics",
+    "source": {
+      "label": "Kaspa node guide",
+      "url": "https://docs.kaspa.org/integrate/kaspa-node"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_sdk_network_id",
+    "question": "Which setting selects mainnet in the RPC getting-started example?",
+    "choices": [
+      "networkId",
+      "A token ticker",
+      "A quiz score",
+      "A recovery phrase"
+    ],
+    "answer": 0,
+    "explain": "The RPC client receives a network identifier.",
+    "topic": "Builder basics",
+    "source": {
+      "label": "Kaspa integration guide",
+      "url": "https://docs.kaspa.org/integrate/getting-started"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_sdk_borsh_encoding",
+    "question": "Which RPC encoding appears in the JavaScript getting-started example?",
+    "choices": [
+      "PDF",
+      "Borsh",
+      "JPEG",
+      "MP3"
+    ],
+    "answer": 1,
+    "explain": "The example explicitly selects Encoding.Borsh.",
+    "topic": "Builder basics",
+    "source": {
+      "label": "Kaspa integration guide",
+      "url": "https://docs.kaspa.org/integrate/getting-started"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_sdk_resolver",
+    "question": "What finds a node when the getting-started example omits rpcUrl?",
+    "choices": [
+      "A miner reward",
+      "A quiz receipt",
+      "A Resolver",
+      "A token ticker"
+    ],
+    "answer": 2,
+    "explain": "The example selects a resolver when no direct URL is supplied.",
+    "topic": "Builder basics",
+    "source": {
+      "label": "Kaspa integration guide",
+      "url": "https://docs.kaspa.org/integrate/getting-started"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_sdk_rpc_cleanup",
+    "question": "After reading DAG information, how does the example release its RPC connection?",
+    "choices": [
+      "Mint another token",
+      "Publish its keys",
+      "Erase the network",
+      "disconnect()"
+    ],
+    "answer": 3,
+    "explain": "The finally block disconnects the RPC client.",
+    "topic": "Builder basics",
+    "source": {
+      "label": "Kaspa integration guide",
+      "url": "https://docs.kaspa.org/integrate/getting-started"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_reader_pruning_start",
+    "question": "What is the oldest checkpoint still available on a node in the reader guide?",
+    "choices": [
+      "pruningPointHash",
+      "A wallet password",
+      "The token ticker",
+      "A quiz timestamp"
+    ],
+    "answer": 0,
+    "explain": "The first pull can begin at the node’s pruning point.",
+    "topic": "Network events",
+    "source": {
+      "label": "Kaspa accepted-transactions guide",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_reader_order",
+    "question": "In which direction does the documented accepted-transaction pull return blocks?",
+    "choices": [
+      "Sorted by token price",
+      "From startHash toward newer blocks",
+      "Always newest to oldest",
+      "Randomly shuffled"
+    ],
+    "answer": 1,
+    "explain": "The response advances from its starting position toward the tip.",
+    "topic": "Network events",
+    "source": {
+      "label": "Kaspa accepted-transactions guide",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_reader_subscription",
+    "question": "Which subscription follows live virtual-chain changes in the accepted-transactions guide?",
+    "choices": [
+      "walletOpen",
+      "TextEncoder",
+      "SubscribeVirtualChainChanged",
+      "accountsSend"
+    ],
+    "answer": 2,
+    "explain": "It offers a live alternative to repeatedly pulling accepted IDs.",
+    "topic": "Network events",
+    "source": {
+      "label": "Kaspa accepted-transactions guide",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_reader_parallel",
+    "question": "When does the ingestion guide suggest parallel workers?",
+    "choices": [
+      "Only before connecting",
+      "When sharing private keys",
+      "To skip all validation",
+      "When processing is order-independent"
+    ],
+    "answer": 3,
+    "explain": "Independent pipelines can process work in parallel.",
+    "topic": "Network events",
+    "source": {
+      "label": "Kaspa accepted-transactions guide",
+      "url": "https://docs.kaspa.org/integrate/accepted-transactions"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_krc_amount",
+    "question": "Which KRC-20 transfer field contains the token amount in Kiwi’s example?",
+    "choices": [
+      "amt",
+      "p",
+      "tick",
+      "to"
+    ],
+    "answer": 0,
+    "explain": "The transfer example puts its amount in amt.",
+    "topic": "KRC-20",
+    "source": {
+      "label": "Kasplex Kiwi examples",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/examples/krc20.test.ts"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_krc_commit_reveal",
+    "question": "What are the two inscription stages demonstrated by Kiwi?",
+    "choices": [
+      "Score, then level",
+      "Commit, then reveal",
+      "Stake, then vote",
+      "Swap, then mine"
+    ],
+    "answer": 1,
+    "explain": "The separate reveal example refers to a previous commit transaction.",
+    "topic": "KRC-20",
+    "source": {
+      "label": "Kasplex Kiwi examples",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/examples/krc20.test.ts"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_krc_transfer_receipt",
+    "question": "What identifier does Kiwi’s transfer example return after its transaction call?",
+    "choices": [
+      "An account password",
+      "A quiz score",
+      "A transaction ID",
+      "A recovery phrase"
+    ],
+    "answer": 2,
+    "explain": "The example stores and logs the transfer txid.",
+    "topic": "KRC-20",
+    "source": {
+      "label": "Kasplex Kiwi examples",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/examples/krc20.test.ts"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_krc_issue_identifier",
+    "question": "In Kiwi’s issue-mode example, which field identifies the deployment hash?",
+    "choices": [
+      "tick",
+      "lim",
+      "dec",
+      "ca"
+    ],
+    "answer": 3,
+    "explain": "The issue-mode example uses ca to identify the deployment.",
+    "topic": "KRC-20",
+    "source": {
+      "label": "Kasplex Kiwi examples",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/examples/krc20.test.ts"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_wallet_hd_addresses",
+    "question": "What can an HD wallet derive according to Kiwi’s documentation?",
+    "choices": [
+      "Multiple wallet addresses",
+      "Guaranteed token profits",
+      "Unlimited new KAS",
+      "Other people’s keys"
+    ],
+    "answer": 0,
+    "explain": "The SDK documents hierarchical deterministic address derivation.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kasplex Kiwi SDK",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/README.md"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_wallet_multisig",
+    "question": "What does Kiwi’s multi-signature support allow?",
+    "choices": [
+      "Guaranteed recovery without keys",
+      "A wallet using multiple signing keys",
+      "A password-free exchange",
+      "Unlimited token issuance"
+    ],
+    "answer": 1,
+    "explain": "Multiple signing keys can participate under the wallet’s signing rules.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kasplex Kiwi SDK",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/README.md"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_sdk_wasm_pair",
+    "question": "Why keep Kiwi’s JavaScript and WebAssembly modules on compatible versions?",
+    "choices": [
+      "It doubles every balance",
+      "It removes all network fees",
+      "Mismatched versions can fail at runtime",
+      "It changes token supply"
+    ],
+    "answer": 2,
+    "explain": "Kiwi warns against mixing incompatible JS and WASM builds.",
+    "topic": "Builder basics",
+    "source": {
+      "label": "Kasplex Kiwi SDK",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/README.md"
+    },
+    "reviewedAt": "2026-10-14"
+  },
+  {
+    "id": "mini_wallet_request_accounts",
+    "question": "Which call requests account access in Kiwi’s browser-extension example?",
+    "choices": [
+      "getBlockDagInfo()",
+      "executeReveal()",
+      "TextEncoder()",
+      "requestAccounts()"
+    ],
+    "answer": 3,
+    "explain": "The example requests accounts before reading the connected wallet balance.",
+    "topic": "Wallet basics",
+    "source": {
+      "label": "Kasplex Kiwi SDK",
+      "url": "https://github.com/kasplex/sdk-kiwi/blob/main/README.md"
+    },
+    "reviewedAt": "2026-10-14"
   }
 ]

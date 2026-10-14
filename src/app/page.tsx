@@ -32,7 +32,7 @@ export default function HomePage() {
           <div className="section-heading"><div><span className="eyebrow">Pick your pace</span><h2 id="play-title">Play a round.</h2></div><p>{questions.length} source-backed questions about Kaspa. Explanations and a review after every round.</p></div>
           <div className="mode-grid">
             <Link className="mode-card" href="/daily"><span className="mode-index">01 / DAILY</span><div className="mode-symbol" aria-hidden="true">◇</div><h3>Daily Challenge</h3><p>Five questions, one shared set each UTC day. A good first stop.</p><span className="mode-link">Start daily <span aria-hidden="true">↗</span></span></Link>
-            <Link className="mode-card" href="/speed"><span className="mode-index">02 / FAST</span><div className="mode-symbol" aria-hidden="true">⌁</div><h3>Speed Round</h3><p>Ten questions in 30 seconds. See how much you know at speed.</p><span className="mode-link">Start speed <span aria-hidden="true">↗</span></span></Link>
+            <Link className="mode-card" href="/speed"><span className="mode-index">02 / FAST</span><div className="mode-symbol" aria-hidden="true">⌁</div><h3>Speed Round</h3><p>Pick a Kaspa topic or mix them all. Ten questions in 30 seconds.</p><span className="mode-link">Start speed <span aria-hidden="true">↗</span></span></Link>
           </div>
         </section>
 
