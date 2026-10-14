@@ -18,7 +18,8 @@ export function SiteHeader() {
         <Brand />
         <nav aria-label="Main navigation" className="site-nav">
           <Link href="/#play">Play</Link>
-          <Link href="/#share">For supporters</Link>
+          <Link href="/progress">Progress</Link>
+          <Link className="supporters-nav" href="/#share">For supporters</Link>
           <a className="nav-outer" href="https://www.geekprotocol.xyz/" target="_blank" rel="noopener noreferrer">Geek Protocol <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
@@ -31,6 +32,7 @@ export function SiteFooter() {
     <footer className="site-footer shell">
       <span>Geek Mini · Learn Kaspa. Share curiosity.</span>
       <span>Free practice · No wallet · No rewards</span>
+      <Link href="/progress">Your progress</Link>
       <a href="https://www.geekprotocol.xyz/" target="_blank" rel="noopener noreferrer">Explore Geek Protocol ↗</a>
     </footer>
   );

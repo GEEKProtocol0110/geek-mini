@@ -29,6 +29,14 @@ Mini links to Geek Protocol after a round and from the embed. Supporters do not 
 - Invalid/future cooldown records are ignored rather than locking a player out. Invalid result records are not shown. The result URL contains no editable score. Browser storage and clocks can still be edited; nothing is ranked, rewarded, or paid.
 - No backend, wallet, tracking, or monetary reward system is involved.
 
+## Your progress
+
+Open **Progress** in the navigation or **View your saved progress** after a round. The page shows the last 20 valid scores in this browser, with Daily/Speed filters, best scores within that history, and today's saved Daily best. Speed best ranks by number correct, then accuracy and recency; one correct answer out of one does not outrank eight correct in a full round. Percentages are recalculated from correct/answered counts.
+
+New Daily scores retain the round's UTC generation date, even across midnight. Older scores remain visible but are not assumed to be today's set. The homepage shows a returning-player link when valid history exists. Focus, cross-tab storage changes and a minute check refresh the view and UTC date.
+
+**Clear Mini records** asks for confirmation, then removes only Mini's score history, local Speed cooldown and this tab's last result. Other keys and the HQ account remain untouched. Each deletion is attempted independently; blocked storage reports incomplete deletion with browser-settings guidance. Other open tabs can still hold their own result until closed. Nothing is synced or sent to HQ, and these editable browser scores remain unranked practice.
+
 ## Development
 
 Requires Node.js 20.9+ and npm (CI uses Node 22). Run `npm ci`, then `npm run dev`. Open `http://localhost:3000`.
