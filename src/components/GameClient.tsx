@@ -10,6 +10,7 @@ import { finishRound, getSpeedCooldown } from "../utils/roundResult";
 import { createRoundClock } from "../utils/roundClock";
 
 import type { RoundReview } from "../utils/questionBank";
+import { isSpeedFocus, questionsForFocus, speedFocuses, speedFocusLabel, type SpeedFocus } from "../utils/speedFocus";
 
 const SPEED_SECONDS = 30;
 
@@ -25,6 +26,7 @@ export function GameClient({ mode }: { mode: QuizMode }) {
   const [ready, setReady] = useState(false);
   const [started, setStarted] = useState(false);
   const [utcDate, setUtcDate] = useState("");
+  const [focus, setFocus] = useState<SpeedFocus>("mixed");
   const review = useRef<RoundReview[]>([]);
   const finished = useRef(false);
   const answerLocked = useRef(false);
@@ -41,7 +43,11 @@ export function GameClient({ mode }: { mode: QuizMode }) {
       const date = new Date().toISOString().slice(0, 10);
       setUtcDate(date);
       setRounds(buildRounds(mode, date));
-      if (mode === "speed") setCooldown(getSpeedCooldown());
+      if (mode === "speed") {
+        const requested = new URLSearchParams(window.location.search).get("focus");
+        setFocus(isSpeedFocus(requested) ? requested : "mixed");
+        setCooldown(getSpeedCooldown());
+      }
       setReady(true);
     }, 0);
     return () => clearTimeout(setup);
@@ -56,9 +62,9 @@ export function GameClient({ mode }: { mode: QuizMode }) {
     if (mode === "speed" && current && !items.some(item => item.questionId === current.question.id)) {
       items.push({ questionId: current.question.id, selected: null });
     }
-    finishRound(mode, finalScore, total, { utcDate, review: items });
+    finishRound(mode, finalScore, total, { utcDate, review: items, focus: mode === "speed" ? focus : undefined });
     router.replace("/result");
-  }, [mode, router, rounds, utcDate]);
+  }, [mode, router, rounds, utcDate, focus]);
 
   useEffect(() => {
     if (!ready || !started || mode !== "speed" || cooldown !== 0 || finished.current) return;
@@ -164,7 +170,7 @@ export function GameClient({ mode }: { mode: QuizMode }) {
   }
 
   if (mode === "speed" && !started) {
-    return <><SiteHeader /><main className="game-shell shell"><Link href="/" className="back-link">← Back to Mini</Link><section className="game-panel start-panel" aria-labelledby="start-title"><span className="eyebrow">GEEK // MINI · SPEED ROUND</span><h1 id="start-title">Ready when you are.</h1><p>Up to ten Kaspa questions in 30 seconds. The clock starts only when you press Start.</p><ul><li>Choose with a tap or keys 1–4.</li><li>Each answer advances automatically after a brief reveal.</li><li>Review your answers and sources after the round.</li><li>The clock keeps running if you leave the tab.</li></ul><button type="button" className="button button-primary" onClick={() => { if (clock.current || cooldown !== 0) return; clock.current = createRoundClock(SPEED_SECONDS * 1000); setStarted(true); }}>Start Speed Round ↗</button><p className="game-footnote">Free practice. No wallet or rewards.</p></section></main></>;
+    return <><SiteHeader /><main className="game-shell shell"><Link href="/" className="back-link">← Back to Mini</Link><section className="game-panel start-panel" aria-labelledby="start-title"><span className="eyebrow">GEEK // MINI · SPEED ROUND</span><h1 id="start-title">Ready when you are.</h1><p>Up to ten Kaspa questions in 30 seconds. The clock starts only when you press Start.</p><ul><li>Choose with a tap or keys 1–4.</li><li>Each answer advances automatically after a brief reveal.</li><li>Review your answers and sources after the round.</li><li>The clock keeps running if you leave the tab.</li></ul><label className="speed-focus">Choose your topic<select value={focus} onChange={event => { if (!clock.current && isSpeedFocus(event.target.value)) setFocus(event.target.value); }}>{speedFocuses.map(choice => <option key={choice.id} value={choice.id}>{choice.label} · {questionsForFocus(choice.id).length} questions</option>)}</select></label><p className="focus-description" role="status">{speedFocuses.find(choice => choice.id === focus)?.description} Ten distinct questions are selected when you start.</p><button type="button" className="button button-primary" onClick={() => { if (clock.current || cooldown !== 0) return; setRounds(buildRounds(mode, utcDate, focus)); clock.current = createRoundClock(SPEED_SECONDS * 1000); setStarted(true); }}>Start Speed Round ↗</button><p className="game-footnote">Free practice. No wallet or rewards.</p></section></main></>;
   }
 
   const current = rounds[index];
@@ -174,7 +180,7 @@ export function GameClient({ mode }: { mode: QuizMode }) {
 
   return (
     <><SiteHeader /><main className="game-shell shell">
-      <div className="game-top"><Link href="/" className="back-link">← Back to Mini</Link><span className="game-kind">{mode === "daily" ? `${utcDate} UTC · FIVE QUESTIONS` : "TEN QUESTIONS · 30 SECONDS"}</span></div>
+      <div className="game-top"><Link href="/" className="back-link">← Back to Mini</Link><span className="game-kind">{mode === "daily" ? `${utcDate} UTC · FIVE QUESTIONS` : `${speedFocusLabel(focus)} · 30 SECONDS`}</span></div>
       <div className={`game-heading${mode === "speed" ? " speed-heading" : ""}${mode === "speed" && seconds <= 5 ? " time-urgent" : ""}`}><div><span className="eyebrow">GEEK // MINI</span><h1>{title}</h1></div><div className="game-numbers"><span>{mode === "speed" ? "TIME LEFT" : "YOUR SCORE"}</span><strong aria-live="off">{mode === "speed" ? `${seconds}s` : `${score} / ${rounds.length}`}</strong></div></div>
       {mode === "speed" && seconds <= 5 && <p className="timer-alert" role="status">Five seconds or less. Finish the answer you know.</p>}
       <div className="progress-track" role="progressbar" aria-valuenow={index + 1} aria-valuemin={1} aria-valuemax={rounds.length} aria-label="Question progress"><div style={{ width: `${((index + 1) / rounds.length) * 100}%` }} /></div>

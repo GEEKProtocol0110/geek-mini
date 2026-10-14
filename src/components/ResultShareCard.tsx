@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { RoundResult } from "../utils/roundResult";
+import { speedFocusLabel, speedLink } from "../utils/speedFocus";
 import { challengeShare } from "../utils/share";
 
 function drawCard(canvas: HTMLCanvasElement, result: RoundResult) {
@@ -23,10 +24,10 @@ function drawCard(canvas: HTMLCanvasElement, result: RoundResult) {
   ctx.fillStyle = "#83e5d8"; ctx.font = "bold 45px Arial";
   ctx.fillText("Your turn. What do you know about Kaspa?", 70, 417);
   ctx.fillStyle = "#c8ddd7"; ctx.font = "24px Arial";
-  ctx.fillText(result.utcDate ? `${result.utcDate} UTC · Personal practice score` : "Personal practice score · Free to play", 70, 468);
+  ctx.fillText(result.utcDate ? `${result.utcDate} UTC · Personal practice score` : `${result.focus ? speedFocusLabel(result.focus) + " · " : ""}Personal practice score`, 70, 468);
   ctx.strokeStyle = "#639f8e"; ctx.beginPath(); ctx.moveTo(70, 512); ctx.lineTo(1130, 512); ctx.stroke();
   ctx.fillStyle = "#f0f6f3"; ctx.font = "bold 26px Arial";
-  ctx.fillText(`geek-mini.vercel.app/${result.mode}`, 70, 568);
+  ctx.fillText(`geek-mini.vercel.app${result.mode === "daily" ? "/daily" : speedLink(result.focus)}`, 70, 568);
   ctx.textAlign = "right"; ctx.fillStyle = "#a9c5bd"; ctx.font = "22px Arial";
   ctx.fillText("BY GEEK PROTOCOL", 1130, 568);
   ctx.textAlign = "left";
@@ -68,7 +69,7 @@ export function ResultShareCard({ result }: { result: RoundResult }) {
   return <section className="result-share-card" aria-labelledby="share-card-title">
     <span className="eyebrow">Made to pass on</span><h2 id="share-card-title">Take your result with you.</h2>
     <p>A card for your group chat or timeline. Scores are personal practice, not verified rankings.</p>
-    <canvas ref={canvas} width="1200" height="630" role="img" aria-label={`Geek Mini ${result.mode} challenge card: ${result.score} correct out of ${result.total}. Personal practice score.`} />
+    <canvas ref={canvas} width="1200" height="630" role="img" aria-label={`Geek Mini ${result.mode} ${result.focus ? speedFocusLabel(result.focus) : ""} challenge card: ${result.score} correct out of ${result.total}. Personal practice score.`} />
     <div className="result-actions"><button className="button button-primary" type="button" disabled={busy} onClick={() => exportCard(true)}>Share result card ↗</button><button className="button button-outline" type="button" disabled={busy} onClick={() => exportCard(false)}>Download card ↓</button></div>
     <p className="action-status" role="status">{status}</p>
   </section>;

@@ -1,4 +1,5 @@
 import { isUtcDate } from "./questionBank";
+import { isSpeedFocus, type SpeedFocus } from "./speedFocus";
 
 export const SCORE_KEY = "geek_mini_scores";
 export interface GameScore {
@@ -8,6 +9,7 @@ export interface GameScore {
   accuracy: number;
   timestamp: number;
   utcDate?: string;
+  focus?: SpeedFocus;
 }
 
 function validScore(value: unknown, now: number): GameScore | null {
@@ -21,6 +23,7 @@ function validScore(value: unknown, now: number): GameScore | null {
     accuracy: item.total ? Math.round(item.score / item.total * 100) : 0, timestamp: item.timestamp };
   // Legacy scores have no generation date. A completion date cannot identify their Daily set.
   if (item.mode === "daily" && isUtcDate(item.utcDate) && item.utcDate <= new Date(item.timestamp).toISOString().slice(0, 10)) score.utcDate = item.utcDate;
+  if (item.mode === "speed" && isSpeedFocus(item.focus)) score.focus = item.focus;
   return score;
 }
 

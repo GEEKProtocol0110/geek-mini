@@ -1,5 +1,6 @@
 import questions from "../data/questions/kaspa.daily.json";
 import type { QuizMode, QuizQuestion } from "../types/quiz";
+import { questionsForFocus, type SpeedFocus } from "./speedFocus";
 
 export interface Round {
   question: QuizQuestion;
@@ -31,10 +32,10 @@ function seededRandom(seed: number): () => number {
   };
 }
 
-export function buildRounds(mode: QuizMode, utcDate = new Date().toISOString().slice(0, 10)): Round[] {
+export function buildRounds(mode: QuizMode, utcDate = new Date().toISOString().slice(0, 10), focus: SpeedFocus = "mixed"): Round[] {
   const random = mode === "daily" ? seededRandom(seedFor(utcDate)) : Math.random;
   const count = mode === "daily" ? 5 : 10;
-  return shuffle(questions as QuizQuestion[], random).slice(0, count).map((question) => ({
+  return shuffle(mode === "daily" ? questions as QuizQuestion[] : questionsForFocus(focus), random).slice(0, count).map((question) => ({
     question,
     choices: shuffle(
       question.choices.map((text, index) => ({ text, isCorrect: index === question.answer })),
