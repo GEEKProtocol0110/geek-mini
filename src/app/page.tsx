@@ -16,7 +16,7 @@ export default function HomePage() {
             <h1 id="hero-title">Learn Kaspa.<br /><span>Pass it on.</span></h1>
             <p>Geek Mini turns Kaspa basics into a quick challenge you can play, share, or put on your own site. Made for the curious and the community that brings them in.</p>
             <div className="hero-actions">
-              <Link className="button button-primary" href="/daily">Play today’s five <span aria-hidden="true">↗</span></Link>
+              <Link className="button button-primary" href="/compete?mode=daily">Play today’s five <span aria-hidden="true">↗</span></Link>
               <Link className="button button-quiet" href="#share">Share with your community <span aria-hidden="true">↓</span></Link>
             </div>
             <div className="hero-notes"><span>Free to play</span><span>No sign-in</span><span>About 2 minutes</span></div>
@@ -31,10 +31,11 @@ export default function HomePage() {
 
         <section id="play" className="play-section shell" aria-labelledby="play-title">
           <DailyReturn />
+          <p className="leaderboard-invite"><Link className="button button-outline" href="/leaderboard">See the worldwide Mini leaderboard ↗</Link></p>
           <div className="section-heading"><div><span className="eyebrow">Pick your pace</span><h2 id="play-title">Play a round.</h2></div><p>{questions.length} source-backed questions about Kaspa. Explanations and a review after every round.</p></div>
           <div className="mode-grid">
-            <Link className="mode-card" href="/daily"><span className="mode-index">01 / DAILY</span><div className="mode-symbol" aria-hidden="true">◇</div><h3>Daily Challenge</h3><p>Five questions, one shared set each UTC day. A good first stop.</p><span className="mode-link">Start daily <span aria-hidden="true">↗</span></span></Link>
-            <Link className="mode-card" href="/speed"><span className="mode-index">02 / FAST</span><div className="mode-symbol" aria-hidden="true">⌁</div><h3>Speed Round</h3><p>Pick a Kaspa topic or mix them all. Ten questions in 30 seconds.</p><span className="mode-link">Start speed <span aria-hidden="true">↗</span></span></Link>
+            <Link className="mode-card" href="/compete?mode=daily"><span className="mode-index">01 / DAILY</span><div className="mode-symbol" aria-hidden="true">◇</div><h3>Daily Challenge</h3><p>Five questions, one shared set each UTC day. A good first stop.</p><span className="mode-link">Start daily <span aria-hidden="true">↗</span></span></Link>
+            <Link className="mode-card" href="/compete?mode=speed"><span className="mode-index">02 / FAST</span><div className="mode-symbol" aria-hidden="true">⌁</div><h3>Speed Round</h3><p>Pick a Kaspa topic or mix them all. Ten questions in 30 seconds.</p><span className="mode-link">Start speed <span aria-hidden="true">↗</span></span></Link>
           </div>
         </section>
 

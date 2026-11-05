@@ -16,7 +16,7 @@ Example embed (replace the domain with your deployment if needed):
 
 Mini links to Geek Protocol after a round and from the embed. Supporters do not need accounts, wallet connections, referral codes, or tokens.
 
-## Play behavior
+## Play behavior (personal practice)
 
 - Daily: five questions and answer order shared by visitors on the same UTC day. Replay is allowed; scores are practice only.
 - Speed: choose **All Kaspa topics**, **Kaspa basics**, **The network**, **Wallets and payments**, or **Tokens and builders** on the readiness screen. Each focused pool contains at least ten questions; ten distinct prompts and shuffled choices are drawn when Start is pressed. Daily stays mixed and shared on the same bank version/date. Topic links such as `/speed?focus=wallets` preselect the topic; unknown values fall back to mixed. A readiness screen waits for an explicit **Start Speed Round** before the clock begins. Up to ten randomized questions in 30 elapsed seconds, followed by a 30-second local cooldown. Background throttling, sleep and delayed callbacks do not extend the round. The deadline is checked when answering and when returning to the page.
@@ -27,7 +27,7 @@ Mini links to Geek Protocol after a round and from the embed. Supporters do not 
 - Review receipts contain question IDs and original choice indices. A content fingerprint prevents a bank update from silently reinterpreting an old receipt. Results without a matching valid review still show their score with a prompt to play a new round for review. Bank updates can also change a day's Daily set; visitors share ordering on the same bank version and UTC day.
 - The last result is held in browser session storage and score history in local storage. Those writes are independent: blocked session storage cannot suppress history or cooldown writes. Client-side result navigation also keeps a visit-only receipt when storage is blocked. The result page reports whether history was saved. Reloading or closing the page can lose a visit-only result; a visit-only cooldown cannot survive a new document.
 - Invalid/future cooldown records are ignored rather than locking a player out. Invalid result records are not shown. The result URL contains no editable score. Browser storage and clocks can still be edited; nothing is ranked, rewarded, or paid.
-- No backend, wallet, tracking, or monetary reward system is involved.
+- Personal practice uses no backend, wallet, tracking, or monetary reward system. The opt-in public challenge described below uses shared server scoring.
 
 ## Your progress
 
@@ -66,3 +66,15 @@ Replace the mirrored text K in the decorative homepage preview with the actual K
 Validation and the exact preview/release result are recorded in the associated PR. Local browser preview could not start because the managed runner passed unsupported Vite flags (`--host`/`--strictPort`) to `next dev`; no application dev script was changed to work around that infrastructure mismatch. Rendered/mobile acceptance remains separate.
 
 Local checks: all 33 existing tests pass, zero failures/skips; TypeScript, ESLint, production build and whitespace checks pass. Production dependency audit reports zero vulnerabilities at this check. Generated homepage HTML includes both assets and the question text. The optimized WebP is 100,534 bytes. No gameplay code, question bank, storage or dependency inputs changed.
+
+## Public leaderboard and challenge (November 5, 2026 candidate)
+
+`/leaderboard` shows **Mini players only**. HQ's separate public `/leaderboard/` can show the same Mini standings beside its own mode/category boards. Scores are never added across different games. Home's main play links lead to `/compete?mode=daily` or `/compete?mode=speed`, which explicitly asks the visitor to start a public challenge. `/daily`, `/speed` and `/progress` remain personal practice; old local results are not imported. Supporter embeds and existing shared practice links continue working.
+
+The same-origin Next `/api/competition` proxy calls only `https://www.geekprotocol.xyz/api/mini`. **Release the matching HQ API first.** No Mini environment secret or database credential is needed: HQ uses its existing Redis in an isolated Mini namespace, and Mini stores the random identity bearer in an HttpOnly, Secure production, SameSite=Lax cookie. Writes require a matching Origin; the bearer is stripped from browser JSON. Generated public nicknames avoid unmoderated free-text names. Scores, ordering, one-Daily-attempt slots, 30-second Speed deadlines, topic separation and best-score updates are server controlled. Exactly equal scores share a rank. User-initiated resume handles interrupted submissions; failed requests do not trigger an automatic retry loop.
+
+Starting a public challenge opts into publishing the generated nickname/result. The board can be viewed without a cookie or account. Public identity has a 90-day inactivity retention, Daily boards 35 days and Speed boards 90 days without new results. The board offers removal of this cookie identity's public scores, serialized against late score writes. Losing the cookie loses control of that identity; this is not account recovery or a person-per-profile guarantee. Clearing personal practice records does not clear the public board.
+
+The Mini bank is already public. Server grading prevents a client from sending an edited total; it does not prevent answer lookup, automation, or repeated browser identities. These are public practice standings, not intelligence scores, private-ranked-season acceptance or token rewards. No HQ account/wallet data is shared with Mini. The paired HQ design and tests are documented in `GEEKProtocol0110/geek-protocol-hq/docs/PUBLIC-LEADERBOARD.md`.
+
+Verification: 38 Mini tests pass, including fixed-upstream proxy routing, cookie secrecy/attributes, same-origin writes, forged-field rejection, unavailable-service errors and removal behavior; TypeScript, ESLint, production build and production dependency audit pass. A paired in-process rehearsal exercised the actual Mini proxy, actual HQ handler and real isolated Redis: explicit Daily start, all five server-graded answers, matching public standings, self-removal and an unchanged unrelated HQ-profile sentinel. This is a local rehearsal, not provider/device acceptance. Managed Next browser preview has the runner flag mismatch recorded above; the separate HQ static preview browser navigation was interrupted and was not retried. Rendered/mobile acceptance remains open.

@@ -191,7 +191,7 @@ export function GameClient({ mode }: { mode: QuizMode }) {
         return <button className={`answer-option${status}`} key={`${current.question.id}:${option}`} type="button" disabled={selected !== null || seconds <= 0 && mode === "speed"} onClick={() => answer(option)}><span className="option-number">{option + 1}</span><span>{choice.text}</span><span className="option-mark" aria-hidden="true">{selected !== null && choice.isCorrect ? "✓" : selected === option ? "×" : "↗"}</span></button>;
       })}</div>
       {selected !== null && <div className="explanation" role="status"><strong>{current.choices[selected].isCorrect ? "That’s right." : "Good try."}</strong><span>{current.question.explain}</span>{mode === "daily" && <><a className="source-link" href={current.question.source.url} target="_blank" rel="noopener noreferrer">{current.question.source.label} ↗</a><button type="button" className="button button-primary" onClick={next}>{last ? "See your results" : "Next question"} ↗</button></>}</div>}
-      <p className="game-footnote">Free practice. Scores stay in this browser and are not ranked or rewarded. <a href="https://kaspa.org/lore" target="_blank" rel="noopener noreferrer">Learn about Kaspa ↗</a></p>
+      <p className="game-footnote">Free practice. These personal practice scores stay in this browser. <Link href={`/compete?mode=${mode}`}>Play a public leaderboard challenge →</Link> No rewards. <a href="https://kaspa.org/lore" target="_blank" rel="noopener noreferrer">Learn about Kaspa ↗</a></p>
     </main></>
   );
 }
