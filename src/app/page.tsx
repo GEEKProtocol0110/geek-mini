@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import questions from "../data/questions/kaspa.daily.json";
 import { SiteFooter, SiteHeader } from "../components/Brand";
@@ -21,8 +22,9 @@ export default function HomePage() {
             <div className="hero-notes"><span>Free to play</span><span>No sign-in</span><span>About 2 minutes</span></div>
           </div>
           <div className="hero-panel" aria-hidden="true">
+            <Image className="panel-art" src="/mini-learning-scene.webp" alt="" fill sizes="(max-width: 800px) 100vw, 480px" priority />
             <div className="panel-top"><span>GEEK // MINI</span><span>01 / 05</span></div>
-            <div className="panel-center"><span className="panel-k">K</span><div className="panel-orbit panel-orbit-one" /><div className="panel-orbit panel-orbit-two" /></div>
+            <div className="panel-center"><Image className="panel-kaspa" src="/kaspa-symbol.svg" alt="" width={96} height={96} /></div>
             <div className="panel-bottom"><span>QUESTION 01</span><strong>What makes Kaspa different?</strong><span className="panel-answer"><span className="answer-indicator">✓</span> Blocks can coexist in a DAG</span></div>
           </div>
         </section>
