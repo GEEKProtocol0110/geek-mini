@@ -1,0 +1,62 @@
+/* Shared HQ family finish. Presentation only; answer feedback keeps its own colors. */
+:root { --ink:#080f16; --panel:#101e27; --line:#36545d; --mint:#8bdfd3; --white:#eef5f4; --muted:#b1c4c8; --gold:#edce83; }
+body {
+  background:
+    radial-gradient(ellipse at 8% 8%,#164b554f,transparent 42rem),
+    radial-gradient(ellipse at 95% 28%,#5b35843b,transparent 40rem),
+    radial-gradient(circle at 80% 75%,#b48b2920,transparent 28rem),var(--ink);
+  font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+h1,h2,h3 { font-weight:550; letter-spacing:-.035em; text-shadow:none; text-wrap:balance; }
+.hero-copy h1,.game-heading h1,.game-panel h1,.result-card h1,.mini-leaders-hero h1 { font-weight:550; letter-spacing:-.045em; }
+.site-header { background:#08121bea; border-bottom-color:#42616a; }
+.brand img { border:1px solid #897246; border-radius:12px; box-shadow:0 0 20px #e2bd6020; }
+.brand-wordmark { font-weight:750; }
+.brand-slash { color:var(--gold); }
+.site-nav { font-size:13px; font-weight:550; }
+.site-nav a { min-height:44px; display:inline-flex; align-items:center; }
+.site-nav .nav-outer { color:var(--gold); }
+.eyebrow,.mode-index,.game-kind { font-weight:600; letter-spacing:.13em; }
+.status-dot { box-shadow:0 0 12px #8bdfd355; }
+.button { border-radius:12px; font-size:14px; font-weight:650; letter-spacing:0; }
+.button-primary { background:linear-gradient(120deg,#f1d995,#d8b65e); color:#172126; border-color:#ebcf87; box-shadow:0 0 22px #dfbf6320; }
+.button-primary:hover { background:#f5dfab; }
+.button-outline { background:#10212c; border-color:#5e8f98; }
+.button-quiet { padding-inline:14px; }
+.hero-panel { border-color:#5e8a90; box-shadow:0 20px 64px #0005,0 0 36px #5ab7b014; }
+.panel-top { text-shadow:none; font-weight:650; }
+.panel-bottom { background:#08131cf5; backdrop-filter:none; }
+.mode-card,.game-panel,.result-card,.progress-stats>div,.progress-empty,.mini-board,.review-item,.result-share-card {
+  border-color:var(--line); border-radius:16px;
+  background:linear-gradient(135deg,#142932f5,#101b28f5);
+  box-shadow:inset 0 1px 0 #c7faf010,0 12px 32px #0002;
+}
+.mode-card { position:relative; }
+.mode-card:hover { background:#173039; border-color:#8bdfd3; transform:translateY(-2px); box-shadow:0 0 26px #8bdfd314; }
+.mode-symbol,.mode-link { color:var(--gold); }
+.mode-card h3 { font-weight:550; }
+.share-section,.practice-today,.daily-return { border-radius:18px; border-color:#50777c; background:linear-gradient(125deg,#173437e8,#122033f5); }
+.question-panel { border-radius:16px; background:linear-gradient(120deg,#18383aeF,#142131); border-color:#628e91; }
+.question-panel h2 { font-weight:550; }
+.answer-option { border-radius:12px; font-weight:550; }
+.speed-heading { background:#08131bf5; backdrop-filter:none; }
+.progress-track { background:#2d424b; }
+.mini-board-table { max-width:100%; }
+.site-footer { color:var(--muted); }
+.site-footer a { min-height:44px; display:inline-flex; align-items:center; }
+:where(a,button,select,textarea,summary):focus-visible { outline:3px solid var(--gold); outline-offset:4px; }
+:where(select,textarea) { border-radius:10px; }
+@media(max-width:600px) {
+  .site-nav { gap:10px; font-size:12px; }
+  .site-header-inner { gap:8px; padding-block:10px; }
+  .hero { padding-top:42px; padding-bottom:52px; }
+  .hero-copy h1 { font-size:clamp(42px,12vw,66px); }
+  .hero-actions .button { min-height:50px; }
+  .game-panel { padding:24px; }
+  .public-challenge .start-panel h1 { font-size:clamp(28px,8vw,40px); }
+  .mini-leaders-hero h1 { font-size:clamp(36px,11vw,60px); }
+  .mini-board h2 { font-size:27px; }
+  .mode-picker select,.copy-field textarea { font-size:16px; }
+}
+@media(prefers-reduced-motion:reduce) { .mode-card,.button { transition:none; transform:none; } }
+@media(forced-colors:active) { .button,.mode-card,.question-panel { border:1px solid ButtonText; } }
