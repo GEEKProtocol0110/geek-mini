@@ -35,6 +35,7 @@ export function SiteFooter() {
       <span>Free practice · No wallet · No rewards</span>
       <Link href="/progress">Your progress</Link>
       <Link href="/leaderboard">Mini leaderboard</Link>
+      <Link href="/privacy">Privacy</Link>
       <a href="https://www.geekprotocol.xyz/" target="_blank" rel="noopener noreferrer">Explore Geek Protocol ↗</a>
     </footer>
   );
